@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "CarbonEthics Design Style Guide",
     description:
       "Interactive living design system documentation encoding CarbonEthics' visual identity, token architecture, and UI component patterns.",
-    url: "https://www.carbonethics.org/brand-guidelines",
+    url: "https://www.carbonethics.org",
   },
 };
 

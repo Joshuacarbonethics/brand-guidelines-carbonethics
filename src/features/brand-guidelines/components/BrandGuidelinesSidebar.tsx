@@ -35,11 +35,11 @@ const CATEGORIES: CategoryConfig[] = [
     label: "Foundation",
     icon: Layers,
     items: [
-      { id: "overview", label: "Overview & Hub", href: "/brand-guidelines" },
-      { id: "logo", label: "Logo & Brand Assets", href: "/brand-guidelines/logo" },
-      { id: "typography", label: "Typography Hierarchy", href: "/brand-guidelines/typography" },
-      { id: "colors", label: "Color Palette & Swatches", href: "/brand-guidelines/colors" },
-      { id: "spacing-radius", label: "Spacing & Radius Scale", href: "/brand-guidelines/spacing-radius" },
+      { id: "overview", label: "Overview & Hub", href: "/" },
+      { id: "logo", label: "Logo & Brand Assets", href: "/logo" },
+      { id: "typography", label: "Typography Hierarchy", href: "/typography" },
+      { id: "colors", label: "Color Palette & Swatches", href: "/colors" },
+      { id: "spacing-radius", label: "Spacing & Radius Scale", href: "/spacing-radius" },
     ],
   },
   {
@@ -47,7 +47,7 @@ const CATEGORIES: CategoryConfig[] = [
     label: "Components",
     icon: LayoutGrid,
     items: [
-      { id: "buttons", label: "Button Components", href: "/brand-guidelines/buttons" },
+      { id: "buttons", label: "Button Components", href: "/buttons" },
     ],
   },
 ];
@@ -96,7 +96,7 @@ export default function BrandGuidelinesSidebar() {
 
   const navigateTo = (href: string, categoryId?: CategoryId) => {
     setMobileMenuOpen(false);
-    if (href === "/brand-guidelines" || href.endsWith("/brand-guidelines")) {
+    if (href === "/" || href === "/brand-guidelines" || href.endsWith("/brand-guidelines")) {
       setIsSubPanelOpen(false);
     }
     if (categoryId) {

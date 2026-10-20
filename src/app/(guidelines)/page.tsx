@@ -42,7 +42,7 @@ export default function BrandGuidelinesOverviewPage() {
                 </p>
               </div>
               <Link
-                href="/brand-guidelines/logo"
+                href="/logo"
                 className="group/btn inline-flex items-center gap-2 text-[#0A3E6D] hover:opacity-80 transition-opacity w-fit"
               >
                 <span className="text-[18px] leading-7 font-bold">
@@ -75,7 +75,7 @@ export default function BrandGuidelinesOverviewPage() {
                 </p>
               </div>
               <Link
-                href="/brand-guidelines/buttons"
+                href="/buttons"
                 className="group/btn inline-flex items-center gap-2 text-[#0A3E6D] hover:opacity-80 transition-opacity w-fit"
               >
                 <span className="text-[18px] leading-7 font-bold">
