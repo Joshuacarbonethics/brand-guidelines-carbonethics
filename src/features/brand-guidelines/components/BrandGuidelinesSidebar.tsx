@@ -216,7 +216,7 @@ export default function BrandGuidelinesSidebar() {
 
       <aside
         ref={sidebarRef}
-        className="hidden lg:flex items-start gap-3 shrink-0 sticky top-6 lg:top-8 h-fit"
+        className="hidden lg:flex items-start gap-3 shrink-0 sticky top-12 lg:top-14 h-fit"
       >
         <div className="w-[60px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-4 px-2 flex flex-col items-center justify-between min-h-[220px] shrink-0">
           <nav className="flex flex-col items-center gap-1.5 w-full">
