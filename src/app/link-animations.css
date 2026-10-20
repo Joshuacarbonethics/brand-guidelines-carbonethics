@@ -1,0 +1,78 @@
+.underline-fill-link,
+a.underline-fill-link,
+span.underline-fill-link {
+  color: #0a3e6d !important;
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  background-image: linear-gradient(#0a3e6d 0% 100%) !important;
+  background-position: 0 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 1px !important;
+  border: none !important;
+  border-radius: 3px 3px 0 0 !important;
+  padding: 0 4px 1px !important;
+  text-decoration: none !important;
+  transition: background-size 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s !important;
+  display: inline !important;
+  position: relative !important;
+}
+
+.underline-fill-link:hover,
+a.underline-fill-link:hover,
+span.underline-fill-link:hover,
+.group:hover .underline-fill-link {
+  color: #fdfdfd !important;
+  background-size: 100% 100% !important;
+}
+
+.underline-fill-link-dark,
+a.underline-fill-link-dark,
+button.underline-fill-link-dark,
+span.underline-fill-link-dark {
+  color: #fdfdfd !important;
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  background-image: linear-gradient(#fdfdfd 0% 100%) !important;
+  background-position: 0 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 1px !important;
+  border: none !important;
+  border-radius: 3px 3px 0 0 !important;
+  padding: 0 4px 1px !important;
+  text-decoration: none !important;
+  transition: background-size 0.25s cubic-bezier(0.25, 1, 0.5, 1), color 0.2s !important;
+  display: inline !important;
+  position: relative !important;
+}
+
+.underline-fill-link-dark:hover,
+a.underline-fill-link-dark:hover,
+button.underline-fill-link-dark:hover,
+span.underline-fill-link-dark:hover {
+  color: #0a3e6d !important;
+  background-size: 100% 100% !important;
+}
+
+.underline-appear-link,
+a.underline-appear-link,
+span.underline-appear-link {
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  background-image: linear-gradient(currentColor, currentColor) !important;
+  background-position: 0 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: 0% 1px !important;
+  padding-bottom: 2px !important;
+  text-decoration: none !important;
+  transition: background-size 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline !important;
+}
+
+.underline-appear-link:hover,
+a.underline-appear-link:hover,
+span.underline-appear-link:hover,
+a:hover .underline-appear-link,
+button:hover .underline-appear-link,
+.group\/paper:hover .underline-appear-link {
+  background-size: 100% 1px !important;
+}
