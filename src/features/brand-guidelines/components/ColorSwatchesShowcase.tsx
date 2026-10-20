@@ -89,7 +89,7 @@ export default function ColorSwatchesShowcase() {
   const handleCopy = (hex: string) => {
     navigator.clipboard.writeText(hex);
     setCopiedHex(hex);
-    setTimeout(() => setCopiedHex(null), 2000);
+    setTimeout(() => setCopiedHex(null), 1500);
   };
 
   const filteredTokens = COLOR_TOKENS.filter((token) => {
@@ -130,6 +130,7 @@ export default function ColorSwatchesShowcase() {
 
   const renderSwatchColumn = (swatch: SwatchItem) => {
     const hexDisplay = swatch.hex.replace("#", "");
+    const isCopied = copiedHex === swatch.hex;
 
     return (
       <button
@@ -137,33 +138,59 @@ export default function ColorSwatchesShowcase() {
         type="button"
         onClick={() => handleCopy(swatch.hex)}
         title={`Click to copy ${swatch.hex}`}
-        className="group relative flex-1 flex flex-col justify-between items-center h-full pt-3 md:pt-4 pb-3 md:pb-5 cursor-pointer transition-transform hover:scale-[1.01] hover:z-10 focus:outline-none"
-        style={{ backgroundColor: swatch.hex }}
+        className="group relative flex-1 h-full cursor-pointer focus:outline-none hover:z-10 first:rounded-l-[15px] last:rounded-r-[15px]"
       >
-        <div className="h-6 flex items-center justify-center">
-          {swatch.badge ? (
-            <span className="px-1.5 md:px-2 py-0.5 rounded-full bg-white text-[#15151E] text-[8px] md:text-[9.5px] font-bold tracking-wider uppercase shadow-xs whitespace-nowrap">
-              {swatch.badge}
+        {/* Expanding Color Card (Expands up & sideways, no scale = no text blur) */}
+        <div
+          className="absolute inset-0 rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2.5 group-hover:-bottom-1 group-hover:-inset-x-1.5 group-hover:rounded-[10px] pointer-events-none"
+          style={{ backgroundColor: swatch.hex }}
+        />
+
+        {/* Content Layer (Undistorted, crystal clear text) */}
+        <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-3 md:pt-4 pb-3 md:pb-5 transition-transform duration-300 ease-out group-hover:-translate-y-2.5 [backface-visibility:hidden] [transform:translateZ(0)]">
+          <div className="relative h-6 w-full flex items-center justify-center">
+            {swatch.badge ? (
+              <span
+                className={`px-1.5 md:px-2 py-0.5 rounded-full bg-white text-[#15151E] text-[8px] md:text-[9.5px] font-bold tracking-wider uppercase shadow-xs whitespace-nowrap transition-opacity duration-200 ${
+                  isCopied ? "opacity-0" : "group-hover:opacity-0"
+                }`}
+              >
+                {swatch.badge}
+              </span>
+            ) : null}
+
+            {/* COPY HEX / COPIED inside container (No background) */}
+            <div
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
+                isCopied ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              <span
+                className="font-mono font-bold text-[8.5px] md:text-[9.5px] tracking-wider whitespace-nowrap select-none"
+                style={{ color: swatch.textColor }}
+              >
+                {isCopied ? "COPIED!" : "COPY HEX"}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1 flex items-center justify-center">
+            <span
+              className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase"
+              style={{ color: swatch.textColor }}
+            >
+              {hexDisplay}
             </span>
-          ) : null}
-        </div>
+          </div>
 
-        <div className="flex-1 flex items-center justify-center">
-          <span
-            className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase"
-            style={{ color: swatch.textColor }}
-          >
-            {hexDisplay}
-          </span>
-        </div>
-
-        <div className="h-6 flex items-center justify-center">
-          <span
-            className="font-sans font-medium text-xs md:text-sm select-none"
-            style={{ color: swatch.textColor }}
-          >
-            {swatch.step}
-          </span>
+          <div className="h-6 flex items-center justify-center">
+            <span
+              className="font-sans font-medium text-xs md:text-sm select-none"
+              style={{ color: swatch.textColor }}
+            >
+              {swatch.step}
+            </span>
+          </div>
         </div>
       </button>
     );
@@ -171,6 +198,7 @@ export default function ColorSwatchesShowcase() {
 
   const renderTopRow = () => (
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
+      {/* Navy - Brand Color */}
       <div className="w-full lg:flex-[3] flex flex-col">
         <div className="w-full border-t border-[#C7CAD1]/60 shrink-0 h-0 mb-3" />
         <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
@@ -180,55 +208,109 @@ export default function ColorSwatchesShowcase() {
           type="button"
           onClick={() => handleCopy("#0A3E6D")}
           title="Click to copy #0A3E6D"
-          className="w-full h-[320px] md:h-[400px] bg-[#0A3E6D] rounded-[16px] flex flex-col items-center justify-center cursor-pointer transition-transform hover:scale-[1.005] focus:outline-none"
+          className="group relative w-full h-[320px] md:h-[400px] cursor-pointer focus:outline-none hover:z-10 rounded-[16px]"
         >
-          <span className="px-3 py-1 rounded-full bg-white text-[#15151E] text-xs font-semibold uppercase tracking-wider mb-3 shadow-xs">
-            BASE
-          </span>
-          <span className="font-mono text-3xl md:text-4xl font-medium text-white tracking-wider">
-            0A3E6D
-          </span>
+          {/* Expanding Navy Background */}
+          <div className="absolute inset-0 bg-[#0A3E6D] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[16px] pointer-events-none" />
+
+          {/* Content Layer (Crisp, no scale) */}
+          <div className="relative z-10 w-full h-full flex flex-col items-center justify-center transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
+            {/* COPY HEX / COPIED inside container (No background) */}
+            <div
+              className={`absolute top-6 left-1/2 -translate-x-1/2 transition-opacity duration-200 pointer-events-none ${
+                copiedHex === "#0A3E6D" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              <span className="font-mono font-bold text-xs tracking-wider text-white whitespace-nowrap select-none">
+                {copiedHex === "#0A3E6D" ? "COPIED!" : "COPY HEX"}
+              </span>
+            </div>
+
+            <span className="px-3 py-1 rounded-full bg-white text-[#15151E] text-xs font-semibold uppercase tracking-wider mb-3 shadow-xs">
+              BRAND COLOR
+            </span>
+            <span className="font-mono text-3xl md:text-4xl font-medium text-white tracking-wider">
+              0A3E6D
+            </span>
+          </div>
         </button>
       </div>
 
+      {/* Neutral - White and Black */}
       <div className="w-full lg:flex-[1] flex flex-col">
         <div className="w-full border-t border-[#C7CAD1]/60 shrink-0 h-0 mb-3" />
         <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
           Name: <span className="font-semibold text-black">Neutral</span>
         </p>
-        <div className="w-full h-[320px] md:h-[400px] rounded-[16px] border border-gray-200 overflow-hidden flex">
+        <div className="w-full h-[320px] md:h-[400px] rounded-[16px] border border-gray-200 flex relative">
           <button
             type="button"
             onClick={() => handleCopy("#FDFDFD")}
             title="Click to copy #FDFDFD"
-            className="flex-1 h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 bg-[#FDFDFD] cursor-pointer transition-transform hover:scale-[1.01] focus:outline-none"
+            className="group relative flex-1 h-full cursor-pointer focus:outline-none hover:z-10 rounded-l-[15px]"
           >
-            <div className="h-6" />
-            <div className="flex-1 flex items-center justify-center">
-              <span className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase text-[#2A2728]">
-                FDFDFD
+            {/* Expanding White Background */}
+            <div className="absolute inset-0 bg-[#FDFDFD] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[12px] pointer-events-none" />
+
+            {/* Content Layer (Crisp, no scale) */}
+            <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
+              <div className="relative h-6 w-full flex items-center justify-center">
+                {/* COPY HEX / COPIED inside container (No background) */}
+                <div
+                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
+                    copiedHex === "#FDFDFD" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
+                >
+                  <span className="font-mono font-bold text-[10px] md:text-xs tracking-wider text-black whitespace-nowrap select-none">
+                    {copiedHex === "#FDFDFD" ? "COPIED!" : "COPY HEX"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex-1 flex items-center justify-center">
+                <span className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase text-[#2A2728]">
+                  FDFDFD
+                </span>
+              </div>
+              <span className="font-sans font-medium text-xs md:text-sm text-[#2A2728]">
+                White
               </span>
             </div>
-            <span className="font-sans font-medium text-xs md:text-sm text-[#2A2728]">
-              White
-            </span>
           </button>
 
           <button
             type="button"
             onClick={() => handleCopy("#2A2728")}
             title="Click to copy #2A2728"
-            className="flex-1 h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 bg-[#2A2728] cursor-pointer transition-transform hover:scale-[1.01] focus:outline-none"
+            className="group relative flex-1 h-full cursor-pointer focus:outline-none hover:z-10 rounded-r-[15px]"
           >
-            <div className="h-6" />
-            <div className="flex-1 flex items-center justify-center">
-              <span className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase text-white">
-                2A2728
+            {/* Expanding Black Background */}
+            <div className="absolute inset-0 bg-[#2A2728] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[12px] pointer-events-none" />
+
+            {/* Content Layer (Crisp, no scale) */}
+            <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
+              <div className="relative h-6 w-full flex items-center justify-center">
+                {/* COPY HEX / COPIED inside container (No background) */}
+                <div
+                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
+                    copiedHex === "#2A2728" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
+                >
+                  <span className="font-mono font-bold text-[10px] md:text-xs tracking-wider text-white whitespace-nowrap select-none">
+                    {copiedHex === "#2A2728" ? "COPIED!" : "COPY HEX"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex-1 flex items-center justify-center">
+                <span className="rotate-90 select-none font-mono font-medium text-xs md:text-sm tracking-wider uppercase text-white">
+                  2A2728
+                </span>
+              </div>
+              <span className="font-sans font-medium text-xs md:text-sm text-white">
+                Black
               </span>
             </div>
-            <span className="font-sans font-medium text-xs md:text-sm text-white">
-              Black
-            </span>
           </button>
         </div>
       </div>
@@ -238,7 +320,7 @@ export default function ColorSwatchesShowcase() {
   return (
     <section id="colors" className="scroll-mt-24">
       <div className="flex flex-col gap-2 mb-8">
-        <h2 className="type-h2-bold text-black">Color Tokens & Swatches</h2>
+        <h2 className="type-h2-bold text-black">Color Tokens &amp; Swatches</h2>
         <p className="type-body2-regular text-gray-700 max-w-3xl">
           The palette is inspired by coastal landscapes, oceanic navy waters, and coastal mangroves. Click any swatch or Hex code to copy directly to your clipboard.
         </p>
@@ -279,15 +361,8 @@ export default function ColorSwatchesShowcase() {
         </div>
       </div>
 
-      {copiedHex && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0A3E6D] text-white shadow-xl text-xs font-medium animate-in fade-in slide-in-from-bottom-2 duration-200">
-          <Check className="w-4 h-4 text-emerald-400 stroke-[3]" />
-          <span>Hex {copiedHex} copied to clipboard!</span>
-        </div>
-      )}
-
       {searchQuery.trim() === "" && (
-        <div className="space-y-8 md:space-y-10">
+        <div className="relative z-0 space-y-8 md:space-y-10">
           {renderTopRow()}
 
           <AnimatePresence mode="popLayout" initial={false}>
@@ -309,7 +384,7 @@ export default function ColorSwatchesShowcase() {
                   <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                     Name: <span className="font-semibold text-black">Frost Blue</span>
                   </p>
-                  <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                  <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                     {MAIN_FROST_BLUE_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                   </div>
                 </motion.div>
@@ -323,7 +398,7 @@ export default function ColorSwatchesShowcase() {
                   <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                     Name: <span className="font-semibold text-black">Sands</span>
                   </p>
-                  <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                  <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                     {MAIN_SANDS_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                   </div>
                 </motion.div>
@@ -337,7 +412,7 @@ export default function ColorSwatchesShowcase() {
                   <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                     Name: <span className="font-semibold text-black">Gray</span>
                   </p>
-                  <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                  <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                     {MAIN_GRAY_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                   </div>
                 </motion.div>
@@ -360,7 +435,7 @@ export default function ColorSwatchesShowcase() {
                   <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                     Name: <span className="font-semibold text-black">Frost Blue</span>
                   </p>
-                  <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[320px] md:h-[400px]">
+                  <div className="rounded-[16px] border border-gray-200 flex relative h-[320px] md:h-[400px]">
                     {ALL_FROST_BLUE_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                   </div>
                 </motion.div>
@@ -374,7 +449,7 @@ export default function ColorSwatchesShowcase() {
                   <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                     Name: <span className="font-semibold text-black">Sands</span>
                   </p>
-                  <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[320px] md:h-[400px]">
+                  <div className="rounded-[16px] border border-gray-200 flex relative h-[320px] md:h-[400px]">
                     {ALL_SANDS_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                   </div>
                 </motion.div>
@@ -389,7 +464,7 @@ export default function ColorSwatchesShowcase() {
                     <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                       Name: <span className="font-semibold text-black">Gray</span>
                     </p>
-                    <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                    <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                       {ALL_GRAY_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                     </div>
                   </motion.div>
@@ -405,7 +480,7 @@ export default function ColorSwatchesShowcase() {
                     <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                       Name: <span className="font-semibold text-black">Turquoise</span>
                     </p>
-                    <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                    <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                       {TURQUOISE_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                     </div>
                   </motion.div>
@@ -421,7 +496,7 @@ export default function ColorSwatchesShowcase() {
                     <p className="text-[14px] md:text-[16px] text-[#606060] font-normal mb-3">
                       Name: <span className="font-semibold text-black">Coral</span>
                     </p>
-                    <div className="rounded-[16px] border border-gray-200 overflow-hidden flex h-[280px] md:h-[340px]">
+                    <div className="rounded-[16px] border border-gray-200 flex relative h-[280px] md:h-[340px]">
                       {CORAL_SWATCHES.map((swatch) => renderSwatchColumn(swatch))}
                     </div>
                   </motion.div>
@@ -433,7 +508,7 @@ export default function ColorSwatchesShowcase() {
       )}
 
       {searchQuery.trim() !== "" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="relative z-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredTokens.map((c) => {
             const isCopied = copiedHex === c.hex;
             const isLight = isLightBackground(c.hex);
@@ -443,7 +518,7 @@ export default function ColorSwatchesShowcase() {
               <div
                 key={c.token}
                 onClick={() => handleCopy(c.hex)}
-                className="group bg-white rounded-[8px] border border-gray-300 overflow-hidden cursor-pointer flex flex-col"
+                className="group relative bg-white rounded-[8px] border border-gray-300 overflow-hidden cursor-pointer flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
               >
                 <div
                   className="h-28 w-full relative p-3 flex flex-col justify-between"

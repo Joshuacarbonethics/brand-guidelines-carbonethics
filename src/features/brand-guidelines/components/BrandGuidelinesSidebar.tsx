@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import {
+  Home,
   Layers,
   LayoutGrid,
   ChevronRight,
@@ -29,13 +30,18 @@ interface CategoryConfig {
   items: SubNavItem[];
 }
 
+const HOME_NAV_ITEM: SubNavItem = {
+  id: "overview",
+  label: "Overview & Hub",
+  href: "/",
+};
+
 const CATEGORIES: CategoryConfig[] = [
   {
     id: "foundation",
     label: "Foundation",
     icon: Layers,
     items: [
-      { id: "overview", label: "Overview & Hub", href: "/" },
       { id: "logo", label: "Logo & Brand Assets", href: "/logo" },
       { id: "typography", label: "Typography Hierarchy", href: "/typography" },
       { id: "colors", label: "Color Palette & Swatches", href: "/colors" },
@@ -52,9 +58,12 @@ const CATEGORIES: CategoryConfig[] = [
   },
 ];
 
-const ALL_NAV_ITEMS = CATEGORIES.flatMap((cat) =>
-  cat.items.map((item) => ({ ...item, categoryId: cat.id }))
-);
+const ALL_NAV_ITEMS = [
+  { ...HOME_NAV_ITEM, categoryId: null },
+  ...CATEGORIES.flatMap((cat) =>
+    cat.items.map((item) => ({ ...item, categoryId: cat.id }))
+  ),
+];
 
 export default function BrandGuidelinesSidebar() {
   const pathname = usePathname();
@@ -66,21 +75,22 @@ export default function BrandGuidelinesSidebar() {
     if (pathname.includes("/colors")) return { section: "colors", category: "foundation" as CategoryId };
     if (pathname.includes("/spacing-radius")) return { section: "spacing-radius", category: "foundation" as CategoryId };
     if (pathname.includes("/logo")) return { section: "logo", category: "foundation" as CategoryId };
-    return { section: "overview", category: "foundation" as CategoryId };
+    return { section: "overview", category: null };
   };
 
   const { section: activeSection, category: currentRouteCategory } = getActiveFromPath();
-  const [selectedCategory, setSelectedCategory] = useState<CategoryId>(currentRouteCategory);
-  const [prevRouteCategory, setPrevRouteCategory] = useState<CategoryId>(currentRouteCategory);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId>(currentRouteCategory || "foundation");
+  const [prevRouteCategory, setPrevRouteCategory] = useState<CategoryId | null>(currentRouteCategory);
   const [prevSection, setPrevSection] = useState<string>(activeSection);
   const [isSubPanelOpen, setIsSubPanelOpen] = useState<boolean>(activeSection !== "overview");
+  const [isSubPanelExpanded, setIsSubPanelExpanded] = useState<boolean>(activeSection !== "overview");
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [mobileExpandedCats, setMobileExpandedCats] = useState<Record<CategoryId, boolean>>({
     foundation: true,
     components: true,
   });
 
-  if (prevRouteCategory !== currentRouteCategory) {
+  if (currentRouteCategory && prevRouteCategory !== currentRouteCategory) {
     setPrevRouteCategory(currentRouteCategory);
     setSelectedCategory(currentRouteCategory);
   }
@@ -89,6 +99,7 @@ export default function BrandGuidelinesSidebar() {
     setPrevSection(activeSection);
     if (activeSection === "overview") {
       setIsSubPanelOpen(false);
+      setIsSubPanelExpanded(false);
     }
   }
 
@@ -98,6 +109,7 @@ export default function BrandGuidelinesSidebar() {
     setMobileMenuOpen(false);
     if (href === "/" || href === "/brand-guidelines" || href.endsWith("/brand-guidelines")) {
       setIsSubPanelOpen(false);
+      setIsSubPanelExpanded(false);
     }
     if (categoryId) {
       setSelectedCategory(categoryId);
@@ -106,8 +118,19 @@ export default function BrandGuidelinesSidebar() {
   };
 
   const handleCategoryClick = (catId: CategoryId) => {
+    if (activeSection === "overview") {
+      setSelectedCategory(catId);
+      setIsSubPanelOpen(true);
+      return;
+    }
+
     if (selectedCategory === catId) {
-      setIsSubPanelOpen((prev) => !prev);
+      if (isSubPanelOpen) {
+        setIsSubPanelExpanded(false);
+        setIsSubPanelOpen(false);
+      } else {
+        setIsSubPanelOpen(true);
+      }
     } else {
       setSelectedCategory(catId);
       setIsSubPanelOpen(true);
@@ -145,6 +168,33 @@ export default function BrandGuidelinesSidebar() {
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             className="lg:hidden fixed inset-x-4 top-[60px] z-40 bg-white rounded-[24px] border border-gray-200/80 p-4 shadow-2xl flex flex-col gap-3 max-h-[75vh] overflow-y-auto"
           >
+            {/* Overview & Hub (Home) in mobile menu */}
+            <button
+              onClick={() => navigateTo(HOME_NAV_ITEM.href)}
+              className={`flex items-center justify-between px-3 py-2.5 rounded-[12px] text-left transition-colors ${
+                activeSection === "overview"
+                  ? "bg-navy-900 text-white font-semibold shadow-xs"
+                  : "hover:bg-gray-50 text-gray-700 font-medium"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Home
+                  className={`w-[18px] h-[18px] ${
+                    activeSection === "overview" ? "text-white" : "text-gray-500"
+                  }`}
+                />
+                <span className="text-[15px]">{HOME_NAV_ITEM.label}</span>
+              </div>
+              <ChevronRight
+                className={`w-4 h-4 ${
+                  activeSection === "overview" ? "text-white/80" : "text-gray-400"
+                }`}
+              />
+            </button>
+
+            <div className="w-full h-[1px] bg-gray-100 my-0.5" />
+
+            {/* Category Groups in mobile menu */}
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon;
               const isCatActive = selectedCategory === cat.id;
@@ -156,18 +206,18 @@ export default function BrandGuidelinesSidebar() {
                     onClick={() => toggleMobileCat(cat.id)}
                     className="relative flex items-center justify-between px-3 py-2.5 rounded-[12px] text-left transition-colors hover:bg-gray-50"
                   >
-                    {isCatActive && (
+                    {isCatActive && activeSection !== "overview" && (
                       <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-[#2A2728] rounded-full" />
                     )}
                     <div className="flex items-center gap-3">
                       <Icon
                         className={`w-[18px] h-[18px] ${
-                          isCatActive ? "text-[#2A2728]" : "text-gray-500"
+                          isCatActive && activeSection !== "overview" ? "text-[#2A2728]" : "text-gray-500"
                         }`}
                       />
                       <span
                         className={`text-[15px] ${
-                          isCatActive
+                          isCatActive && activeSection !== "overview"
                             ? "font-semibold text-[#2A2728]"
                             : "font-normal text-gray-600"
                         }`}
@@ -216,13 +266,34 @@ export default function BrandGuidelinesSidebar() {
 
       <aside
         ref={sidebarRef}
-        className="hidden lg:flex items-start gap-3 shrink-0 sticky top-12 lg:top-14 h-fit"
+        className="hidden lg:flex items-start shrink-0 sticky top-12 lg:top-14 h-fit"
       >
-        <div className="w-[60px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-4 px-2 flex flex-col items-center justify-between min-h-[220px] shrink-0">
-          <nav className="flex flex-col items-center gap-1.5 w-full">
+        <div className="w-[60px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-5 px-2 flex flex-col items-center justify-between min-h-[260px] shrink-0">
+          <nav className="flex flex-col items-center gap-1 w-full">
+            {/* Overview & Hub (Home) Icon Button */}
+            <button
+              onClick={() => navigateTo(HOME_NAV_ITEM.href)}
+              aria-label={HOME_NAV_ITEM.label}
+              title={HOME_NAV_ITEM.label}
+              className={`w-9 h-9 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
+                activeSection === "overview"
+                  ? "bg-navy-900 text-white shadow-xs"
+                  : "text-gray-500 hover:text-navy-900 hover:bg-gray-100/60"
+              }`}
+            >
+              <Home
+                className={`w-[18px] h-[18px] shrink-0 ${
+                  activeSection === "overview"
+                    ? "text-white stroke-[2]"
+                    : "stroke-[1.75]"
+                }`}
+              />
+            </button>
+
+            {/* Category Icons (Foundation, Components) with tight uniform gap */}
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon;
-              const isSelected = selectedCategory === cat.id;
+              const isSelected = activeSection !== "overview" && selectedCategory === cat.id;
 
               return (
                 <button
@@ -233,7 +304,7 @@ export default function BrandGuidelinesSidebar() {
                   className={`w-9 h-9 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
                     isSelected
                       ? "bg-navy-900 text-white shadow-xs"
-                      : "text-gray-500 hover:text-navy-900"
+                      : "text-gray-500 hover:text-navy-900 hover:bg-gray-100/60"
                   }`}
                 >
                   <Icon
@@ -250,7 +321,14 @@ export default function BrandGuidelinesSidebar() {
 
           <div className="pt-4">
             <button
-              onClick={() => setIsSubPanelOpen(!isSubPanelOpen)}
+              onClick={() => {
+                if (isSubPanelOpen) {
+                  setIsSubPanelExpanded(false);
+                  setIsSubPanelOpen(false);
+                } else {
+                  setIsSubPanelOpen(true);
+                }
+              }}
               title={isSubPanelOpen ? "Collapse submenu" : "Expand submenu"}
               aria-label={isSubPanelOpen ? "Collapse submenu" : "Expand submenu"}
               className="w-8 h-8 rounded-[10px] flex items-center justify-center text-gray-500 hover:text-navy-900 transition-colors cursor-pointer"
@@ -268,11 +346,32 @@ export default function BrandGuidelinesSidebar() {
           {isSubPanelOpen && (
             <motion.div
               key="extended-subpanel"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 250, opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden shrink-0"
+              initial={{ width: 0, opacity: 0, marginLeft: 0 }}
+              animate={{
+                width: 250,
+                opacity: 1,
+                marginLeft: 12,
+                transitionEnd: { overflow: "visible" },
+              }}
+              exit={{
+                width: 0,
+                opacity: 0,
+                marginLeft: 0,
+                overflow: "hidden",
+              }}
+              transition={{
+                width: { duration: 0.28, ease: [0.32, 0.72, 0, 1] },
+                marginLeft: { duration: 0.28, ease: [0.32, 0.72, 0, 1] },
+                opacity: { duration: 0.18, ease: "easeInOut" },
+              }}
+              onAnimationComplete={() => {
+                if (isSubPanelOpen) {
+                  setIsSubPanelExpanded(true);
+                }
+              }}
+              className={`shrink-0 ${
+                isSubPanelExpanded ? "overflow-visible" : "overflow-hidden"
+              }`}
             >
               <div className="w-[250px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-6 px-5 flex flex-col min-h-[260px]">
                 <AnimatePresence mode="wait">
