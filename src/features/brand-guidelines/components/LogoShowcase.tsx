@@ -10,14 +10,39 @@ interface LogoItem {
   src: string;
   bgClass: string;
   isDark: boolean;
+  driveLink?: string;
+  description?: string;
 }
 
 const PRIMARY_LOGO: LogoItem = {
-  name: "Full Logo with Wordmark (Navy)",
+  name: "Full Horizontal Logo with Wordmark (Navy)",
   src: "/logo/LogoWNameBlue.png",
   bgClass: "bg-white",
   isDark: false,
 };
+
+const VERTICAL_LOGOS: LogoItem[] = [
+  {
+    name: "Vertical Full Logo (Navy)",
+    src: "/logo/LogoVerticalBlue.png",
+    bgClass: "bg-white",
+    isDark: false,
+    driveLink:
+      "https://drive.google.com/file/d/1-IETG-jApMZ-Rk_MrrfUZgk_j2wjvB9z/view?usp=drive_link",
+    description:
+      "Stacked vertical format suited for center-aligned layouts, social media stories, vertical banners, and portrait media.",
+  },
+  {
+    name: "Vertical Full Logo (White)",
+    src: "/logo/LogoVerticalWhite.png",
+    bgClass: "bg-[#0A3E6D]",
+    isDark: true,
+    driveLink:
+      "https://drive.google.com/file/d/1YDIwII7a2XN8rwMu6_JwR02ZQcfxIS7H/view?usp=drive_link",
+    description:
+      "Inverted vertical lockup for dark backgrounds, photography overlays, and high-contrast dark surfaces.",
+  },
+];
 
 const SECONDARY_LOGOS: LogoItem[] = [
   {
@@ -51,7 +76,7 @@ export default function LogoShowcase() {
         <div className="flex flex-col gap-2">
           <h2 className="type-h2-bold text-black">Brand Logo &amp; Assets</h2>
           <p className="type-body2-regular text-gray-700 max-w-3xl">
-            Our brand identity system centers on our primary horizontal full logo, supported by inverted and standalone symbol variants engineered for versatile multi-channel applications.
+            Our brand identity system centers on our primary horizontal full logo, supported by vertical lockups and standalone symbol variants engineered for versatile multi-channel applications.
           </p>
         </div>
 
@@ -97,7 +122,8 @@ export default function LogoShowcase() {
               width={520}
               height={260}
               priority
-              className="max-h-36 sm:max-h-48 md:max-h-56 w-auto object-contain transition-transform duration-300 group-hover:scale-105" style={{ width: "auto" }}
+              className="max-h-36 sm:max-h-48 md:max-h-56 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              style={{ width: "auto" }}
             />
           </div>
 
@@ -116,7 +142,82 @@ export default function LogoShowcase() {
         </div>
       </div>
 
-      {/* 2. SECONDARY / COMPLEMENTARY VARIANTS */}
+      {/* 2. VERTICAL LOCKUP VARIANTS */}
+      <div>
+        <div className="mb-4">
+          <h3 className="type-title-medium text-gray-900 font-semibold">
+            Vertical Lockup Variants
+          </h3>
+          <p className="type-body2-regular text-gray-600 mt-1 max-w-2xl">
+            Stacked orientation tailored for center-aligned layouts, social media stories, vertical banners, merchandise, and portrait compositions.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {VERTICAL_LOGOS.map((item) => (
+            <div
+              key={item.name}
+              className="bg-white rounded-[16px] border border-gray-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md transition-shadow"
+            >
+              <div className="p-5 pb-3">
+                <span className="type-body2-medium text-navy-900 font-semibold text-[15px] truncate block">
+                  {item.name}
+                </span>
+              </div>
+
+              {/* Logo Preview Canvas */}
+              <div
+                className={`w-full h-72 sm:h-80 ${item.bgClass} flex items-center justify-center p-8 pb-14 relative overflow-hidden transition-all mt-auto group`}
+              >
+                {!item.isDark && (
+                  <div
+                    className="absolute inset-0 opacity-[0.035] pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(#0A3E6D 1px, transparent 1px)",
+                      backgroundSize: "16px 16px",
+                    }}
+                  />
+                )}
+
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src={item.src}
+                    alt={item.name}
+                    width={260}
+                    height={200}
+                    className="max-h-48 sm:max-h-56 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    style={{ width: "auto" }}
+                  />
+                </div>
+
+                {/* Overlay link at the bottom */}
+                <div
+                  className={`absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-5 py-2.5 backdrop-blur-xs transition-colors border-t ${
+                    item.isDark
+                      ? "bg-[#0A3E6D]/85 border-white/10 text-white"
+                      : "bg-white/85 border-gray-100/80 text-navy-900"
+                  }`}
+                >
+                  <a
+                    href={item.driveLink || DRIVE_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1.5 text-xs font-semibold hover:opacity-80 transition-opacity ${
+                      item.isDark ? "text-white" : "text-navy-900"
+                    }`}
+                  >
+                    <span>Download (Google Drive)</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 3. SECONDARY / COMPLEMENTARY VARIANTS */}
       <div>
         <div className="mb-4">
           <h3 className="type-title-medium text-gray-900 font-semibold">
@@ -146,7 +247,8 @@ export default function LogoShowcase() {
                     alt={item.name}
                     width={220}
                     height={110}
-                    className="max-h-20 sm:max-h-24 w-auto object-contain transition-transform duration-300 hover:scale-105" style={{ width: "auto" }}
+                    className="max-h-20 sm:max-h-24 w-auto object-contain transition-transform duration-300 hover:scale-105"
+                    style={{ width: "auto" }}
                   />
                 </div>
 
@@ -178,5 +280,3 @@ export default function LogoShowcase() {
     </section>
   );
 }
-
-
