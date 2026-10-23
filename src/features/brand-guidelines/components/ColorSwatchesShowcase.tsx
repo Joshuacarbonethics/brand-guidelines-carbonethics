@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { COLOR_TOKENS } from "@/config/designTokens";
 import { Check, Copy, Search } from "lucide-react";
@@ -12,6 +12,69 @@ interface SwatchItem {
   hex: string;
   badge?: "BASE" | "DARK FROST" | "DARK SANDS";
   textColor: string;
+}
+
+function CopyHexIndicator({
+  isCopied,
+  textColor,
+  size = "md",
+}: {
+  isCopied: boolean;
+  textColor?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const sizeClasses = {
+    sm: "text-[11px] md:text-[13px] gap-1",
+    md: "text-xs md:text-sm gap-1.5",
+    lg: "text-sm md:text-base gap-2",
+  }[size];
+
+  const iconSizes = {
+    sm: "w-3 h-3 md:w-3.5 md:h-3.5",
+    md: "w-3.5 h-3.5 md:w-4 md:h-4",
+    lg: "w-4 h-4 md:w-4.5 md:h-4.5",
+  }[size];
+
+  return (
+    <div className="relative flex items-center justify-center overflow-hidden py-0.5 select-none bg-transparent">
+      <AnimatePresence mode="popLayout" initial={false}>
+        {isCopied ? (
+          <motion.span
+            key="copied"
+            initial={{ y: 14, opacity: 0, filter: "blur(2px)" }}
+            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            exit={{ y: -14, opacity: 0, filter: "blur(2px)" }}
+            transition={{ type: "spring", stiffness: 450, damping: 26, mass: 0.6 }}
+            className={`font-mono font-bold tracking-wider whitespace-nowrap inline-flex items-center justify-center ${sizeClasses}`}
+            style={textColor ? { color: textColor } : undefined}
+          >
+            <motion.span
+              initial={{ scale: 0, rotate: -25 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 500, damping: 20, delay: 0.04 }}
+              className="inline-flex items-center justify-center"
+            >
+              <Check className={`${iconSizes} stroke-[3] shrink-0`} />
+            </motion.span>
+            <span>COPIED!</span>
+          </motion.span>
+        ) : (
+          <motion.span
+            key="copy"
+            initial={{ y: 14, opacity: 0, filter: "blur(2px)" }}
+            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            exit={{ y: -14, opacity: 0, filter: "blur(2px)" }}
+            transition={{ type: "spring", stiffness: 450, damping: 26, mass: 0.6 }}
+            className={`font-mono font-bold tracking-wider whitespace-nowrap inline-flex items-center justify-center ${sizeClasses}`}
+            style={textColor ? { color: textColor } : undefined}
+          >
+            <Copy className={`${iconSizes} stroke-[2.2] shrink-0 opacity-80`} />
+            <span>COPY HEX</span>
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 const MAIN_FROST_BLUE_SWATCHES: SwatchItem[] = [
@@ -85,12 +148,35 @@ export default function ColorSwatchesShowcase() {
   const [selectedCategory, setSelectedCategory] = useState<string>("Main");
   const [searchQuery, setSearchQuery] = useState("");
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleCopy = (hex: string) => {
-    navigator.clipboard.writeText(hex);
+    try {
+      navigator.clipboard.writeText(hex);
+    } catch {
+      // Fallback if clipboard API is restricted
+    }
+
+    // Cancel any previous timer to prevent premature resets and glitching on spam/double clicks
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
     setCopiedHex(hex);
-    setTimeout(() => setCopiedHex(null), 1500);
+
+    timeoutRef.current = setTimeout(() => {
+      setCopiedHex(null);
+      timeoutRef.current = null;
+    }, 1500);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const filteredTokens = COLOR_TOKENS.filter((token) => {
     return (
@@ -142,16 +228,16 @@ export default function ColorSwatchesShowcase() {
       >
         {/* Expanding Color Card (Expands up & sideways, no scale = no text blur) */}
         <div
-          className="absolute inset-0 rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2.5 group-hover:-bottom-1 group-hover:-inset-x-1.5 group-hover:rounded-[10px] pointer-events-none"
+          className="absolute inset-0 rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2.5 group-hover:-bottom-1 group-hover:-inset-x-1.5 pointer-events-none"
           style={{ backgroundColor: swatch.hex }}
         />
 
         {/* Content Layer (Undistorted, crystal clear text) */}
         <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-3 md:pt-4 pb-3 md:pb-5 transition-transform duration-300 ease-out group-hover:-translate-y-2.5 [backface-visibility:hidden] [transform:translateZ(0)]">
-          <div className="relative h-6 w-full flex items-center justify-center">
+          <div className="relative h-7 w-full flex items-center justify-center">
             {swatch.badge ? (
               <span
-                className={`px-1.5 md:px-2 py-0.5 rounded-full bg-white text-[#15151E] text-[8px] md:text-[9.5px] font-bold tracking-wider uppercase shadow-xs whitespace-nowrap transition-opacity duration-200 ${
+                className={`px-1.5 md:px-2 py-0.5 rounded-full bg-white text-[#15151E] text-[8px] md:text-[9.5px] font-bold tracking-wider uppercase whitespace-nowrap transition-opacity duration-200 ${
                   isCopied ? "opacity-0" : "group-hover:opacity-0"
                 }`}
               >
@@ -159,18 +245,17 @@ export default function ColorSwatchesShowcase() {
               </span>
             ) : null}
 
-            {/* COPY HEX / COPIED inside container (No background) */}
+            {/* COPY HEX / COPIED inside container */}
             <div
               className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
                 isCopied ? "opacity-100" : "opacity-0 group-hover:opacity-100"
               }`}
             >
-              <span
-                className="font-mono font-bold text-[8.5px] md:text-[9.5px] tracking-wider whitespace-nowrap select-none"
-                style={{ color: swatch.textColor }}
-              >
-                {isCopied ? "COPIED!" : "COPY HEX"}
-              </span>
+              <CopyHexIndicator
+                isCopied={isCopied}
+                textColor={swatch.textColor}
+                size="sm"
+              />
             </div>
           </div>
 
@@ -211,22 +296,26 @@ export default function ColorSwatchesShowcase() {
           className="group relative w-full h-[320px] md:h-[400px] cursor-pointer focus:outline-none hover:z-10 rounded-[16px]"
         >
           {/* Expanding Navy Background */}
-          <div className="absolute inset-0 bg-[#0A3E6D] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[16px] pointer-events-none" />
+          <div
+            className="absolute inset-0 bg-[#0A3E6D] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 pointer-events-none"
+          />
 
           {/* Content Layer (Crisp, no scale) */}
           <div className="relative z-10 w-full h-full flex flex-col items-center justify-center transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
-            {/* COPY HEX / COPIED inside container (No background) */}
+            {/* COPY HEX / COPIED inside container */}
             <div
               className={`absolute top-6 left-1/2 -translate-x-1/2 transition-opacity duration-200 pointer-events-none ${
                 copiedHex === "#0A3E6D" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
               }`}
             >
-              <span className="font-mono font-bold text-xs tracking-wider text-white whitespace-nowrap select-none">
-                {copiedHex === "#0A3E6D" ? "COPIED!" : "COPY HEX"}
-              </span>
+              <CopyHexIndicator
+                isCopied={copiedHex === "#0A3E6D"}
+                textColor="#FFFFFF"
+                size="lg"
+              />
             </div>
 
-            <span className="px-3 py-1 rounded-full bg-white text-[#15151E] text-xs font-semibold uppercase tracking-wider mb-3 shadow-xs">
+            <span className="px-3 py-1 rounded-full bg-white text-[#15151E] text-xs font-semibold uppercase tracking-wider mb-3">
               BRAND COLOR
             </span>
             <span className="font-mono text-3xl md:text-4xl font-medium text-white tracking-wider">
@@ -250,20 +339,24 @@ export default function ColorSwatchesShowcase() {
             className="group relative flex-1 h-full cursor-pointer focus:outline-none hover:z-10 rounded-l-[15px]"
           >
             {/* Expanding White Background */}
-            <div className="absolute inset-0 bg-[#FDFDFD] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[12px] pointer-events-none" />
+            <div
+              className="absolute inset-0 bg-[#FDFDFD] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 pointer-events-none"
+            />
 
             {/* Content Layer (Crisp, no scale) */}
             <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
-              <div className="relative h-6 w-full flex items-center justify-center">
-                {/* COPY HEX / COPIED inside container (No background) */}
+              <div className="relative h-7 w-full flex items-center justify-center">
+                {/* COPY HEX / COPIED inside container */}
                 <div
                   className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
                     copiedHex === "#FDFDFD" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                   }`}
                 >
-                  <span className="font-mono font-bold text-[10px] md:text-xs tracking-wider text-black whitespace-nowrap select-none">
-                    {copiedHex === "#FDFDFD" ? "COPIED!" : "COPY HEX"}
-                  </span>
+                  <CopyHexIndicator
+                    isCopied={copiedHex === "#FDFDFD"}
+                    textColor="#15151E"
+                    size="md"
+                  />
                 </div>
               </div>
 
@@ -285,20 +378,24 @@ export default function ColorSwatchesShowcase() {
             className="group relative flex-1 h-full cursor-pointer focus:outline-none hover:z-10 rounded-r-[15px]"
           >
             {/* Expanding Black Background */}
-            <div className="absolute inset-0 bg-[#2A2728] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 group-hover:rounded-[12px] pointer-events-none" />
+            <div
+              className="absolute inset-0 bg-[#2A2728] rounded-[inherit] transition-all duration-300 ease-out group-hover:-top-2 group-hover:-bottom-1 group-hover:-inset-x-1 pointer-events-none"
+            />
 
             {/* Content Layer (Crisp, no scale) */}
             <div className="relative z-10 w-full h-full flex flex-col justify-between items-center pt-6 md:pt-8 pb-4 md:pb-6 transition-transform duration-300 ease-out group-hover:-translate-y-2 [backface-visibility:hidden] [transform:translateZ(0)]">
-              <div className="relative h-6 w-full flex items-center justify-center">
-                {/* COPY HEX / COPIED inside container (No background) */}
+              <div className="relative h-7 w-full flex items-center justify-center">
+                {/* COPY HEX / COPIED inside container */}
                 <div
                   className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 pointer-events-none ${
                     copiedHex === "#2A2728" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                   }`}
                 >
-                  <span className="font-mono font-bold text-[10px] md:text-xs tracking-wider text-white whitespace-nowrap select-none">
-                    {copiedHex === "#2A2728" ? "COPIED!" : "COPY HEX"}
-                  </span>
+                  <CopyHexIndicator
+                    isCopied={copiedHex === "#2A2728"}
+                    textColor="#FFFFFF"
+                    size="md"
+                  />
                 </div>
               </div>
 
@@ -326,7 +423,7 @@ export default function ColorSwatchesShowcase() {
         </p>
       </div>
 
-      <div className="sticky top-[50px] lg:top-0 z-20 bg-[#FAF9F9] -mx-4 px-4 md:-mx-6 md:px-6 pt-4 pb-3 mb-6">
+      <div className="sticky top-[50px] lg:top-0 z-20 bg-[#FFFFFF] -mx-4 px-4 md:-mx-6 md:px-6 pt-4 pb-3 mb-6">
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             {CATEGORIES.map((cat) => {
@@ -338,7 +435,7 @@ export default function ColorSwatchesShowcase() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3.5 py-1.5 rounded-[20px] text-xs font-medium shrink-0 border transition-colors cursor-pointer ${
                     isActive
-                      ? "bg-navy-900 text-white border-navy-900 shadow-xs"
+                      ? "bg-navy-900 text-white border-navy-900"
                       : "bg-white text-gray-700 border-gray-300 hover:border-navy-900 hover:text-navy-900"
                   }`}
                 >
@@ -518,7 +615,7 @@ export default function ColorSwatchesShowcase() {
               <div
                 key={c.token}
                 onClick={() => handleCopy(c.hex)}
-                className="group relative bg-white rounded-[8px] border border-gray-300 overflow-hidden cursor-pointer flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+                className="group relative bg-white rounded-[8px] border border-gray-300 overflow-hidden cursor-pointer flex flex-col transition-all duration-200 hover:-translate-y-1 hover:border-navy-900"
               >
                 <div
                   className="h-28 w-full relative p-3 flex flex-col justify-between"

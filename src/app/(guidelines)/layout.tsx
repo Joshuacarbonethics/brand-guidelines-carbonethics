@@ -1,4 +1,5 @@
 import BrandGuidelinesSidebar from "@/features/brand-guidelines/components/BrandGuidelinesSidebar";
+import { SidebarProvider } from "@/features/brand-guidelines/context/SidebarContext";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,15 +20,17 @@ export default function BrandGuidelinesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full bg-[#FAF9F9] min-h-screen text-[#2A2728]">
-      <div className="max-w-[1700px] mx-auto px-6 md:px-12 xl:px-18 pt-8 sm:pt-12 lg:pt-14 pb-24">
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
-          <BrandGuidelinesSidebar />
-          <main className="flex-1 w-full min-w-0">
-            {children}
-          </main>
+    <SidebarProvider>
+      <div className="w-full bg-[#FFFFFF] min-h-screen text-[#2A2728]">
+        <div className="max-w-[1700px] mx-auto px-6 md:px-12 xl:px-18 pt-8 sm:pt-12 lg:pt-14 pb-24">
+          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
+            <BrandGuidelinesSidebar />
+            <main className="flex-1 w-full min-w-0 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]">
+              {children}
+            </main>
+          </div>
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

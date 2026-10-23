@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { useSidebar } from "../context/SidebarContext";
 import {
   Home,
   Layers,
@@ -80,9 +81,7 @@ export default function BrandGuidelinesSidebar() {
 
   const { section: activeSection, category: currentRouteCategory } = getActiveFromPath();
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>(currentRouteCategory || "foundation");
-  const [prevRouteCategory, setPrevRouteCategory] = useState<CategoryId | null>(currentRouteCategory);
-  const [prevSection, setPrevSection] = useState<string>(activeSection);
-  const [isSubPanelOpen, setIsSubPanelOpen] = useState<boolean>(activeSection !== "overview");
+  const { isSubPanelOpen, setIsSubPanelOpen } = useSidebar();
   const [isSubPanelExpanded, setIsSubPanelExpanded] = useState<boolean>(activeSection !== "overview");
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [mobileExpandedCats, setMobileExpandedCats] = useState<Record<CategoryId, boolean>>({
@@ -90,18 +89,18 @@ export default function BrandGuidelinesSidebar() {
     components: true,
   });
 
-  if (currentRouteCategory && prevRouteCategory !== currentRouteCategory) {
-    setPrevRouteCategory(currentRouteCategory);
-    setSelectedCategory(currentRouteCategory);
-  }
-
-  if (prevSection !== activeSection) {
-    setPrevSection(activeSection);
+  useEffect(() => {
+    if (currentRouteCategory) {
+      setSelectedCategory(currentRouteCategory);
+    }
     if (activeSection === "overview") {
       setIsSubPanelOpen(false);
       setIsSubPanelExpanded(false);
+    } else {
+      setIsSubPanelOpen(true);
+      setIsSubPanelExpanded(true);
     }
-  }
+  }, [activeSection, currentRouteCategory, setIsSubPanelOpen]);
 
   const sidebarRef = useRef<HTMLElement>(null);
 
@@ -145,10 +144,10 @@ export default function BrandGuidelinesSidebar() {
 
   return (
     <>
-      <div className="lg:hidden sticky top-0 z-30 w-full bg-[#FAF9F9]/95 backdrop-blur-md border-b border-gray-300 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-gray-300 px-4 py-3 flex items-center justify-between">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[12px] bg-white border border-gray-200 text-xs font-semibold text-navy-900 shadow-xs"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[12px] bg-white border border-gray-200 text-xs font-semibold text-navy-900"
         >
           {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           <span>Design System Menu</span>
@@ -166,20 +165,20 @@ export default function BrandGuidelinesSidebar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden fixed inset-x-4 top-[60px] z-40 bg-white rounded-[24px] border border-gray-200/80 p-4 shadow-2xl flex flex-col gap-3 max-h-[75vh] overflow-y-auto"
+            className="lg:hidden fixed inset-x-4 top-[60px] z-40 bg-white rounded-[24px] border border-gray-300 p-4 flex flex-col gap-3 max-h-[75vh] overflow-y-auto"
           >
             {/* Overview & Hub (Home) in mobile menu */}
             <button
               onClick={() => navigateTo(HOME_NAV_ITEM.href)}
               className={`flex items-center justify-between px-3 py-2.5 rounded-[12px] text-left transition-colors ${
                 activeSection === "overview"
-                  ? "bg-navy-900 text-white font-semibold shadow-xs"
+                  ? "bg-navy-900 text-white font-semibold"
                   : "hover:bg-gray-50 text-gray-700 font-medium"
               }`}
             >
               <div className="flex items-center gap-3">
                 <Home
-                  className={`w-[18px] h-[18px] ${
+                  className={`w-5 h-5 ${
                     activeSection === "overview" ? "text-white" : "text-gray-500"
                   }`}
                 />
@@ -211,7 +210,7 @@ export default function BrandGuidelinesSidebar() {
                     )}
                     <div className="flex items-center gap-3">
                       <Icon
-                        className={`w-[18px] h-[18px] ${
+                        className={`w-5 h-5 ${
                           isCatActive && activeSection !== "overview" ? "text-[#2A2728]" : "text-gray-500"
                         }`}
                       />
@@ -268,21 +267,21 @@ export default function BrandGuidelinesSidebar() {
         ref={sidebarRef}
         className="hidden lg:flex items-start shrink-0 sticky top-12 lg:top-14 h-fit"
       >
-        <div className="w-[60px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-5 px-2 flex flex-col items-center justify-between min-h-[260px] shrink-0">
-          <nav className="flex flex-col items-center gap-1 w-full">
+        <div className="w-[64px] bg-white rounded-[24px] border border-gray-300 py-5 px-2.5 flex flex-col items-center justify-between min-h-[260px] shrink-0">
+          <nav className="flex flex-col items-center gap-1.5 w-full">
             {/* Overview & Hub (Home) Icon Button */}
             <button
               onClick={() => navigateTo(HOME_NAV_ITEM.href)}
               aria-label={HOME_NAV_ITEM.label}
               title={HOME_NAV_ITEM.label}
-              className={`w-9 h-9 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
+              className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
                 activeSection === "overview"
-                  ? "bg-navy-900 text-white shadow-xs"
+                  ? "bg-navy-900 text-white"
                   : "text-gray-500 hover:text-navy-900 hover:bg-gray-100/60"
               }`}
             >
               <Home
-                className={`w-[18px] h-[18px] shrink-0 ${
+                className={`w-[22px] h-[22px] shrink-0 ${
                   activeSection === "overview"
                     ? "text-white stroke-[2]"
                     : "stroke-[1.75]"
@@ -301,14 +300,14 @@ export default function BrandGuidelinesSidebar() {
                   onClick={() => handleCategoryClick(cat.id)}
                   aria-label={cat.label}
                   title={cat.label}
-                  className={`w-9 h-9 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
+                  className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-navy-900 text-white shadow-xs"
+                      ? "bg-navy-900 text-white"
                       : "text-gray-500 hover:text-navy-900 hover:bg-gray-100/60"
                   }`}
                 >
                   <Icon
-                    className={`w-[18px] h-[18px] shrink-0 ${
+                    className={`w-[22px] h-[22px] shrink-0 ${
                       isSelected
                         ? "text-white stroke-[2]"
                         : "stroke-[1.75]"
@@ -331,12 +330,12 @@ export default function BrandGuidelinesSidebar() {
               }}
               title={isSubPanelOpen ? "Collapse submenu" : "Expand submenu"}
               aria-label={isSubPanelOpen ? "Collapse submenu" : "Expand submenu"}
-              className="w-8 h-8 rounded-[10px] flex items-center justify-center text-gray-500 hover:text-navy-900 transition-colors cursor-pointer"
+              className="w-9 h-9 rounded-[10px] flex items-center justify-center text-gray-500 hover:text-navy-900 transition-colors cursor-pointer"
             >
               {isSubPanelOpen ? (
-                <PanelLeftClose className="w-[16px] h-[16px] stroke-[1.75]" />
+                <PanelLeftClose className="w-[19px] h-[19px] stroke-[1.75]" />
               ) : (
-                <PanelLeftOpen className="w-[16px] h-[16px] stroke-[1.75]" />
+                <PanelLeftOpen className="w-[19px] h-[19px] stroke-[1.75]" />
               )}
             </button>
           </div>
@@ -373,7 +372,7 @@ export default function BrandGuidelinesSidebar() {
                 isSubPanelExpanded ? "overflow-visible" : "overflow-hidden"
               }`}
             >
-              <div className="w-[250px] bg-white rounded-[24px] border border-gray-200/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] py-6 px-5 flex flex-col min-h-[260px]">
+              <div className="w-[250px] bg-white rounded-[24px] border border-gray-300 py-6 px-5 flex flex-col min-h-[260px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentCategory.id}

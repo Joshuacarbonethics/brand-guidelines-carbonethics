@@ -60,7 +60,7 @@ function CustomDropdownField({
   let chevronColor = "text-gray-500";
 
   if (state === "active") {
-    triggerClasses = "border-2 border-[#0A3E6D] bg-[#FDFDFD] text-[#2A2728] shadow-xs";
+    triggerClasses = "border-2 border-[#0A3E6D] bg-[#FDFDFD] text-[#2A2728]";
     labelClasses = "text-[#0A3E6D] font-medium";
     chevronColor = "text-navy-900";
   } else if (state === "disabled" || disabled) {
@@ -127,7 +127,7 @@ function CustomDropdownField({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.96 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute left-0 right-0 top-full mt-1.5 bg-white/95 backdrop-blur-md rounded-[8px] border border-gray-200 shadow-xl overflow-hidden z-[100] py-1 max-h-[220px] overflow-y-auto"
+              className="absolute left-0 right-0 top-full mt-1.5 bg-white/95 backdrop-blur-md rounded-[8px] border border-gray-300 overflow-hidden z-[100] py-1 max-h-[220px] overflow-y-auto"
             >
               {options.map((opt) => {
                 const isSelected = value === opt.value;
@@ -447,7 +447,7 @@ export default function FormButtonsShowcase() {
 
       {/* ================= ARCHIVED / TAKEN OUT TEMPORARILY: TEXT FIELD & DROPDOWN SHOWCASE ================= */}
       {false && (
-      <div className="bg-white rounded-[8px] border border-gray-300 p-6 sm:p-8 shadow-xs flex flex-col gap-8">
+      <div className="bg-white rounded-[8px] border border-gray-300 p-6 sm:p-8 flex flex-col gap-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-300 gap-4">
           <div>
             <h3 className="type-title-medium text-navy-900">Text Field & Dropdown (5 States)</h3>
@@ -510,7 +510,7 @@ export default function FormButtonsShowcase() {
               <input
                 type="email"
                 defaultValue="joshua@carbonethics.org"
-                className="h-[38px] px-4 py-2 rounded-[8px] border-2 border-[#0A3E6D] bg-[#FDFDFD] text-[#2A2728] type-body3-medium focus:outline-none shadow-xs"
+                className="h-[38px] px-4 py-2 rounded-[8px] border-2 border-[#0A3E6D] bg-[#FDFDFD] text-[#2A2728] type-body3-medium focus:outline-none"
               />
             </div>
 

@@ -62,14 +62,14 @@ export default function TypographyShowcase() {
               Aa
             </div>
             <div className="type-h4 text-black mt-2 font-semibold">Public Sans</div>
-            <div className="type-body3-regular text-gray-500 mt-1 mb-5">
+            <div className="type-body3-regular text-gray-700 mt-1 mb-5 font-normal">
               Primary brand font • Designed for optimal digital clarity
             </div>
 
-            {/* Download Public Sans Google Fonts Button */}
+            {/* Download Public Sans Font Files Button */}
             <ArrowButton
               variant="navy"
-              href="https://fonts.google.com/selection?preview.script=Latn"
+              href="https://drive.google.com/drive/folders/1o2Q10wz_EZnIFWhVMpoih7LRs46KElBf"
               target="_blank"
               rel="noopener noreferrer"
               className="!rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
@@ -78,7 +78,7 @@ export default function TypographyShowcase() {
             </ArrowButton>
           </div>
           <div className="lg:col-span-7 flex flex-col gap-4">
-            <div className="type-label-medium uppercase text-gray-500">Character Set Preview</div>
+            <div className="type-label-medium uppercase text-gray-700 font-semibold tracking-wider">Character Set Preview</div>
             <div className="text-[20px] font-normal tracking-wide text-gray-700 leading-relaxed font-sans break-all">
               ABCDEFGHIJKLMNOPQRSTUVWXYZ
               <br />
@@ -111,9 +111,6 @@ export default function TypographyShowcase() {
               Exact sizes, line heights, letter spacings, and token aliases.
             </p>
           </div>
-          <span className="px-3 py-1 bg-white/10 text-white rounded-[8px] border border-white/20 text-xs font-semibold">
-            16 Styles
-          </span>
         </div>
 
         {/* Token Items: Tetap putih */}
@@ -121,7 +118,7 @@ export default function TypographyShowcase() {
           {TYPOGRAPHY_TOKENS.map((item) => (
             <div
               key={item.token}
-              className="p-6 transition-colors hover:bg-gray-50/70 flex flex-col gap-4"
+              className="p-6 flex flex-col gap-4 bg-white"
             >
               {/* Token Specs Bar (style name dihapus di sini karena sudah jadi teks preview) */}
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -140,19 +137,19 @@ export default function TypographyShowcase() {
                   </button>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 text-gray-600 font-mono">
+                <div className="flex flex-wrap items-center gap-3 text-gray-700 font-mono">
                   <span>
                     Size: <strong className="text-black font-semibold">{item.size}</strong>
                   </span>
-                  <span className="text-gray-300">•</span>
+                  <span className="text-gray-400">•</span>
                   <span>
                     Weight: <strong className="text-black font-semibold">{item.weight} ({item.weightName})</strong>
                   </span>
-                  <span className="text-gray-300">•</span>
+                  <span className="text-gray-400">•</span>
                   <span>
                     LH: <strong className="text-black font-semibold">{item.lineHeight}</strong>
                   </span>
-                  <span className="text-gray-300">•</span>
+                  <span className="text-gray-400">•</span>
                   <span>
                     Spacing: <strong className="text-black font-semibold">{item.letterSpacing}</strong>
                   </span>
@@ -160,9 +157,9 @@ export default function TypographyShowcase() {
               </div>
 
               {/* Usage hint */}
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-gray-700">
                 <span className="font-semibold text-navy-900">Usage: </span>
-                {item.usage}
+                <span>{item.usage}</span>
               </div>
 
               {/* Live Rendered Preview (Menggunakan nama font scale sebagai contoh kata default) */}
@@ -198,13 +195,13 @@ export default function TypographyShowcase() {
                   value={customTexts[item.token] || ""}
                   onChange={(e) => handleCustomTextChange(item.token, e.target.value)}
                   placeholder={`Type custom text to preview ${getStyleName(item.token)} live...`}
-                  className="flex-1 h-9 px-3 text-xs bg-gray-50 border border-gray-200 rounded-[6px] text-black focus:bg-white focus:border-navy-900 focus:outline-none transition-all placeholder:text-gray-400"
+                  className="flex-1 h-9 px-3 text-xs bg-gray-50 border border-gray-200 rounded-[6px] text-black focus:bg-white focus:border-navy-900 focus:outline-none transition-all placeholder:text-gray-500"
                 />
                 {customTexts[item.token] && (
                   <button
                     onClick={() => handleCustomTextChange(item.token, "")}
                     title="Reset to default text"
-                    className="h-9 px-3 text-xs text-gray-600 hover:text-navy-900 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-[6px] transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
+                    className="h-9 px-3 text-xs text-gray-700 hover:text-navy-900 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-[6px] transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 font-medium"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Reset</span>
@@ -222,7 +219,7 @@ export default function TypographyShowcase() {
           <h3 className="type-title-medium text-black font-bold">
             Typography in Production: About Us Hero
           </h3>
-          <p className="type-body2-regular text-gray-600 text-sm max-w-3xl">
+          <p className="type-body2-regular text-gray-700 text-sm max-w-3xl">
             Live implementation breakdown illustrating headline hierarchy, contrast weight pairing, and responsive leading on production surfaces.
           </p>
         </div>
@@ -267,23 +264,23 @@ export default function TypographyShowcase() {
 
             {/* Label 1 Pin: H1 Spec (Clean flat styling) */}
             <div className="absolute hidden md:flex flex-col gap-0.5 left-[25.5%] top-[15%] bg-navy-900 text-white px-3 py-1.5 rounded-[8px] border border-white/20 z-10">
-              <span className="text-xs font-bold tracking-tight">H1 Hero Headline</span>
-              <span className="text-[11px] text-white/90 font-mono">
+              <span className="text-xs font-bold tracking-tight text-white">H1 Hero Headline</span>
+              <span className="text-[11px] text-white/95 font-mono">
                 Public Sans • Medium (500) • 44px
               </span>
-              <span className="text-[10px] text-white/70">
-                Leading: 1.1 • Token: <code className="text-[#E6D29E]">hero.title</code>
+              <span className="text-[11px] text-white/90">
+                Leading: 1.1 • Token: <code className="text-[#E6D29E] font-semibold">hero.title</code>
               </span>
             </div>
 
             {/* Label 2 Pin: Subtitle Spec (Positioned below the text and shifted left) */}
             <div className="absolute hidden md:flex flex-col gap-0.5 left-[48%] top-[42%] bg-navy-900 text-white px-3 py-1.5 rounded-[8px] border border-white/20 z-10">
-              <span className="text-xs font-bold tracking-tight">Lead Description Subtitle</span>
-              <span className="text-[11px] text-white/90 font-mono">
+              <span className="text-xs font-bold tracking-tight text-white">Lead Description Subtitle</span>
+              <span className="text-[11px] text-white/95 font-mono">
                 Public Sans • Regular / Light • 19px
               </span>
-              <span className="text-[10px] text-white/70">
-                Leading: 1.6 • Token: <code className="text-[#5EB7A9]">hero.description</code>
+              <span className="text-[11px] text-white/90">
+                Leading: 1.6 • Token: <code className="text-[#71CDBF] font-semibold">hero.description</code>
               </span>
             </div>
           </div>
@@ -296,7 +293,7 @@ export default function TypographyShowcase() {
                 <span className="text-[11px] font-semibold text-navy-900 uppercase tracking-wider">
                   Badge: &ldquo;About CarbonEthics&rdquo;
                 </span>
-                <span className="text-[11px] text-gray-500 font-mono">
+                <span className="text-[11px] text-gray-700 font-mono font-medium">
                   Public Sans SemiBold
                 </span>
               </div>
@@ -309,7 +306,7 @@ export default function TypographyShowcase() {
                 <span className="text-[11px] font-semibold text-navy-900 uppercase tracking-wider">
                   H1: &ldquo;Welcome To CarbonEthics&rdquo;
                 </span>
-                <span className="text-[11px] text-gray-500 font-mono">
+                <span className="text-[11px] text-gray-700 font-mono font-medium">
                   Public Sans Medium
                 </span>
               </div>
@@ -322,7 +319,7 @@ export default function TypographyShowcase() {
                 <span className="text-[11px] font-semibold text-navy-900 uppercase tracking-wider">
                   Lead: &ldquo;Your Climate Solution...&rdquo;
                 </span>
-                <span className="text-[11px] text-gray-500 font-mono">
+                <span className="text-[11px] text-gray-700 font-mono font-medium">
                   Public Sans Regular
                 </span>
               </div>

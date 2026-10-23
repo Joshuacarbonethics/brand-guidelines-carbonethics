@@ -15,7 +15,7 @@ import LogoShowcase from "./LogoShowcase";
 
 export default function BrandGuidelinesMain() {
   return (
-    <div className="w-full bg-[#FAF9F9] min-h-screen text-[#2A2728]">
+    <div className="w-full bg-white min-h-screen text-[#2A2728]">
       {/* Container wrapper matching other pages */}
       <div className="max-w-[1700px] mx-auto px-6 md:px-12 xl:px-18 pt-8 sm:pt-12 lg:pt-14 pb-24">
         {/* Top Header Hero */}

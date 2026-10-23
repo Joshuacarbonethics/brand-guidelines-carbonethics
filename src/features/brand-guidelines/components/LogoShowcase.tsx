@@ -19,6 +19,8 @@ const PRIMARY_LOGO_NAVY: LogoItem = {
   src: "/logo/LogoWNameBlue.png",
   bgClass: "bg-white",
   isDark: false,
+  driveLink:
+    "https://drive.google.com/file/d/1E1CtK3rOFnCH1Fp8QszIXmAGCIY_3V8f/view?usp=drive_link",
 };
 
 const PRIMARY_LOGO_WHITE: LogoItem = {
@@ -26,6 +28,8 @@ const PRIMARY_LOGO_WHITE: LogoItem = {
   src: "/logo/LogoWNameWhite.png",
   bgClass: "bg-[#0A3E6D]",
   isDark: true,
+  driveLink:
+    "https://drive.google.com/file/d/1Phh3tGEB_q-optm8pQ1Zh4jauGcZgxbK/view?usp=drive_link",
 };
 
 const VERTICAL_LOGOS: LogoItem[] = [
@@ -57,12 +61,16 @@ const SYMBOL_LOGOS: LogoItem[] = [
     src: "/logo/LogoBlue.png",
     bgClass: "bg-white",
     isDark: false,
+    driveLink:
+      "https://drive.google.com/file/d/1YhQpiHCB9yddULNhG8JJM3ZTGjFU-QHP/view?usp=drive_link",
   },
   {
     name: "Logomark Symbol (White)",
     src: "/logo/LogoWhite.png",
     bgClass: "bg-[#0A3E6D]",
     isDark: true,
+    driveLink:
+      "https://drive.google.com/file/d/1AGLl_c6bEO9IpIjxUGdPJESWzDGqCYfj/view?usp=drive_link",
   },
 ];
 
@@ -90,7 +98,7 @@ export default function LogoShowcase() {
             rel="noopener noreferrer"
             className="!rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
           >
-            <span>Download All Assets (Drive)</span>
+            <span>Download All Assets</span>
           </ArrowButton>
         </div>
       </div>
@@ -98,7 +106,7 @@ export default function LogoShowcase() {
       {/* 1. PRIMARY HORIZONTAL LOGOS - Full Width Stacked */}
       <div className="flex flex-col gap-6">
         {/* Navy Full Logo - Dominant Height */}
-        <div className="bg-white rounded-[16px] sm:rounded-[20px] border border-gray-300 overflow-hidden flex flex-col shadow-xs">
+        <div className="bg-white rounded-[16px] sm:rounded-[20px] border border-gray-300 overflow-hidden flex flex-col">
           <div className="p-6 sm:p-7 pb-2 flex items-center justify-between">
             <span className="text-lg sm:text-xl text-navy-900 font-bold">
               {PRIMARY_LOGO_NAVY.name}
@@ -128,14 +136,14 @@ export default function LogoShowcase() {
               />
             </div>
 
-            <div className="absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-6 sm:px-8 py-3.5 bg-white/85 backdrop-blur-xs transition-colors border-t border-gray-100/80">
+            <div className="absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-6 sm:px-8 py-3.5 bg-white/85 backdrop-blur-xs transition-colors">
               <a
-                href={DRIVE_LINK}
+                href={PRIMARY_LOGO_NAVY.driveLink || DRIVE_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-navy-900 hover:text-navy-900/80 transition-colors"
               >
-                <span>Get Vector (SVG / EPS / PNG)</span>
+                <span>Download</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -143,7 +151,7 @@ export default function LogoShowcase() {
         </div>
 
         {/* White Full Logo - Half Height, All Navy Blue Background, No Horizontal Line */}
-        <div className="bg-[#0A3E6D] rounded-[16px] sm:rounded-[20px] overflow-hidden flex flex-col shadow-xs">
+        <div className="bg-[#0A3E6D] rounded-[16px] sm:rounded-[20px] overflow-hidden flex flex-col">
           <div className="p-5 sm:p-6 pb-2 flex items-center justify-between">
             <span className="text-lg sm:text-xl text-white font-bold">
               {PRIMARY_LOGO_WHITE.name}
@@ -164,12 +172,12 @@ export default function LogoShowcase() {
 
             <div className="absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-6 sm:px-8 py-2.5 sm:py-3 bg-[#0A3E6D] text-white">
               <a
-                href={DRIVE_LINK}
+                href={PRIMARY_LOGO_WHITE.driveLink || DRIVE_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-white/90 hover:text-white transition-colors"
               >
-                <span>Get Vector (SVG / EPS / PNG)</span>
+                <span>Download</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -192,7 +200,7 @@ export default function LogoShowcase() {
           {VERTICAL_LOGOS.map((item) => (
             <div
               key={item.name}
-              className={`rounded-[16px] flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md transition-shadow ${
+              className={`rounded-[16px] flex flex-col justify-between overflow-hidden ${
                 item.isDark
                   ? "bg-[#0A3E6D]"
                   : "bg-white border border-gray-300"
@@ -234,12 +242,12 @@ export default function LogoShowcase() {
                   />
                 </div>
 
-                {/* Overlay link at the bottom - no horizontal line for dark card */}
+                {/* Overlay link at the bottom - no horizontal line */}
                 <div
                   className={`absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-5 py-2.5 backdrop-blur-xs transition-colors ${
                     item.isDark
                       ? "bg-[#0A3E6D] text-white"
-                      : "bg-white/85 border-t border-gray-100/80 text-navy-900"
+                      : "bg-white/85 text-navy-900"
                   }`}
                 >
                   <a
@@ -250,7 +258,7 @@ export default function LogoShowcase() {
                       item.isDark ? "text-white" : "text-navy-900"
                     }`}
                   >
-                    <span>Download (Google Drive)</span>
+                    <span>Download</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -275,7 +283,7 @@ export default function LogoShowcase() {
           {SYMBOL_LOGOS.map((item) => (
             <div
               key={item.name}
-              className={`rounded-[16px] flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-md transition-shadow ${
+              className={`rounded-[16px] flex flex-col justify-between overflow-hidden ${
                 item.isDark
                   ? "bg-[#0A3E6D]"
                   : "bg-white border border-gray-300"
@@ -317,16 +325,16 @@ export default function LogoShowcase() {
                   />
                 </div>
 
-                {/* Overlay link at the bottom - no horizontal line for dark card */}
+                {/* Overlay link at the bottom - no horizontal line */}
                 <div
                   className={`absolute bottom-0 inset-x-0 z-10 flex items-center justify-end px-5 py-2.5 backdrop-blur-xs transition-colors ${
                     item.isDark
                       ? "bg-[#0A3E6D] text-white"
-                      : "bg-white/85 border-t border-gray-100/80 text-navy-900"
+                      : "bg-white/85 text-navy-900"
                   }`}
                 >
                   <a
-                    href={DRIVE_LINK}
+                    href={item.driveLink || DRIVE_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`inline-flex items-center gap-1.5 text-xs font-semibold hover:opacity-80 transition-opacity ${

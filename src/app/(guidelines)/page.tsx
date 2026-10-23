@@ -21,7 +21,11 @@ export default function BrandGuidelinesOverviewPage() {
         </h2>
 
         <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-[840px]">
-          <div className="group flex flex-col w-full max-w-[402px]">
+          {/* Card 1: Foundation */}
+          <Link
+            href="/logo"
+            className="group flex flex-col w-full max-w-[402px] cursor-pointer"
+          >
             <div className="w-full h-[260px] sm:h-[300px] bg-[#E0E0E0] rounded-t-[20px] overflow-hidden relative">
               <Image
                 src="/images/guidelines/foundation-preview.png"
@@ -32,30 +36,31 @@ export default function BrandGuidelinesOverviewPage() {
                 sizes="(max-width: 768px) 100vw, 402px"
               />
             </div>
-            <div className="w-full bg-[#FDFDFD] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6">
+            <div className="w-full bg-[#FFFFFF] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6 transition-all duration-300 group-hover:border-[#0A3E6D]">
               <div className="flex flex-col gap-2">
                 <h3 className="text-[24px] leading-8 font-normal tracking-[-0.005em] text-[#2A2728]">
                   Foundation
                 </h3>
-                <p className="text-[14px] leading-5 font-light tracking-[0.01em] text-[#949494]">
+                <p className="text-[14px] leading-5 font-normal tracking-[0.01em] text-[#000000]">
                   Core design tokens, brand identity, and visual language principles.
                 </p>
               </div>
-              <Link
-                href="/logo"
-                className="group/btn inline-flex items-center gap-2 text-[#0A3E6D] hover:opacity-80 transition-opacity w-fit"
-              >
+              <div className="inline-flex items-center gap-2 text-[#0A3E6D] group-hover:opacity-80 transition-opacity w-fit">
                 <span className="text-[18px] leading-7 font-bold">
                   Explore More
                 </span>
-                <span className="w-6 h-6 rounded-full bg-[#0A3E6D] flex items-center justify-center text-[#FDFDFD] transition-transform group-hover/btn:translate-x-1">
+                <span className="w-6 h-6 rounded-full bg-[#0A3E6D] flex items-center justify-center text-[#FDFDFD] transition-transform group-hover:translate-x-1">
                   <ArrowRight className="w-3.5 h-3.5 text-white stroke-[2.5]" />
                 </span>
-              </Link>
+              </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="group flex flex-col w-full max-w-[402px]">
+          {/* Card 2: Component */}
+          <Link
+            href="/buttons"
+            className="group flex flex-col w-full max-w-[402px] cursor-pointer"
+          >
             <div className="w-full h-[260px] sm:h-[300px] bg-[#E0E0E0] rounded-t-[20px] overflow-hidden relative">
               <Image
                 src="/images/guidelines/component-preview.png"
@@ -65,28 +70,25 @@ export default function BrandGuidelinesOverviewPage() {
                 sizes="(max-width: 768px) 100vw, 402px"
               />
             </div>
-            <div className="w-full bg-[#FDFDFD] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6">
+            <div className="w-full bg-[#FFFFFF] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6 transition-all duration-300 group-hover:border-[#0A3E6D]">
               <div className="flex flex-col gap-2">
                 <h3 className="text-[24px] leading-8 font-normal tracking-[-0.005em] text-[#2A2728]">
                   Component
                 </h3>
-                <p className="text-[14px] leading-5 font-light tracking-[0.01em] text-[#949494]">
+                <p className="text-[14px] leading-5 font-normal tracking-[0.01em] text-[#000000]">
                   Reusable UI component documented with tokens, variant, usage guidelines
                 </p>
               </div>
-              <Link
-                href="/buttons"
-                className="group/btn inline-flex items-center gap-2 text-[#0A3E6D] hover:opacity-80 transition-opacity w-fit"
-              >
+              <div className="inline-flex items-center gap-2 text-[#0A3E6D] group-hover:opacity-80 transition-opacity w-fit">
                 <span className="text-[18px] leading-7 font-bold">
                   Explore More
                 </span>
-                <span className="w-6 h-6 rounded-full bg-[#0A3E6D] flex items-center justify-center text-[#FDFDFD] transition-transform group-hover/btn:translate-x-1">
+                <span className="w-6 h-6 rounded-full bg-[#0A3E6D] flex items-center justify-center text-[#FDFDFD] transition-transform group-hover:translate-x-1">
                   <ArrowRight className="w-3.5 h-3.5 text-white stroke-[2.5]" />
                 </span>
-              </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 
@@ -115,7 +117,7 @@ export default function BrandGuidelinesOverviewPage() {
             href="https://carbonethics.co"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-fill-link text-[18px] leading-7 font-light"
+            className="underline-fill-link text-[18px] leading-7 font-semibold text-[#0A3E6D]"
           >
             carbonethics.co
           </a>

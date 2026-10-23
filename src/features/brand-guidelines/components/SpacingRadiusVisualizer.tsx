@@ -57,12 +57,9 @@ export default function SpacingRadiusVisualizer() {
                 From micro hair-lines to grand section spacers.
               </p>
             </div>
-            <span className="px-3 py-1 bg-white/10 text-white rounded-[8px] border border-white/20 text-xs font-semibold backdrop-blur-xs">
-              Tailwind 4px Grid
-            </span>
           </div>
 
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 bg-white">
             {SPACING_TOKENS.map((sp) => {
               const isCopied = copiedToken === sp.token;
               const barWidth = Math.max(sp.px, 2);
@@ -70,7 +67,7 @@ export default function SpacingRadiusVisualizer() {
               return (
                 <div
                   key={sp.token}
-                  className="p-4 sm:p-5 hover:bg-gray-50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="p-4 sm:p-5 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   {/* Left Specs */}
                   <div className="w-full md:w-[350px] shrink-0 flex items-center justify-between md:justify-start gap-4 whitespace-nowrap">
@@ -80,13 +77,13 @@ export default function SpacingRadiusVisualizer() {
                       </span>
                       <button
                         onClick={() => handleCopy(sp.token, `${sp.px}px`)}
-                        className="inline-flex items-center gap-1 text-xs font-mono text-gray-500 hover:text-navy-900 bg-gray-100 hover:bg-frost-200 px-2 py-0.5 rounded transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1 text-xs font-mono text-gray-700 font-medium hover:text-navy-900 bg-gray-100 hover:bg-frost-200 px-2 py-0.5 rounded transition-colors cursor-pointer whitespace-nowrap shrink-0"
                         title="Click to copy CSS token"
                       >
                         {isCopied ? (
                           <Check className="w-3 h-3 text-navy-900" />
                         ) : (
-                          <Copy className="w-3 h-3 text-gray-400" />
+                          <Copy className="w-3 h-3 text-gray-500" />
                         )}
                         <span>.{sp.token}</span>
                       </button>
@@ -94,8 +91,8 @@ export default function SpacingRadiusVisualizer() {
 
                     <div className="flex items-center gap-1.5 font-mono text-xs text-gray-700 whitespace-nowrap shrink-0 ml-auto md:ml-0">
                       <span className="font-bold text-black">{sp.px}px</span>
-                      <span className="text-gray-300">/</span>
-                      <span className="text-gray-500">{sp.rem}</span>
+                      <span className="text-gray-400">/</span>
+                      <span className="text-gray-700 font-medium">{sp.rem}</span>
                     </div>
                   </div>
 
@@ -110,7 +107,7 @@ export default function SpacingRadiusVisualizer() {
                   </div>
 
                   {/* Usage explanation */}
-                  <div className="text-xs text-gray-500 md:w-56 shrink-0 md:text-right">
+                  <div className="text-xs text-gray-700 md:w-56 shrink-0 md:text-right">
                     {sp.usage}
                   </div>
                 </div>
@@ -139,7 +136,7 @@ export default function SpacingRadiusVisualizer() {
                 {/* Visual Rounded Block Preview */}
                 <div className="h-36 bg-[#EAF6FD] rounded-[8px] border border-dashed border-[#BCDEED] p-4 flex items-center justify-center mb-4 relative overflow-hidden">
                   <div
-                    className={`w-36 h-24 bg-white border-2 border-navy-900 flex items-center justify-center shadow-xs ${rad.previewClass}`}
+                    className={`w-36 h-24 bg-[#EAF6FD] border-2 border-navy-900 flex items-center justify-center ${rad.previewClass}`}
                   >
                     <span className="font-mono text-sm font-bold text-navy-900">
                       {rad.value}
@@ -154,7 +151,7 @@ export default function SpacingRadiusVisualizer() {
                       <span className="type-body3-medium text-black font-semibold">
                         {RADIUS_NAMES[rad.token] || rad.token}
                       </span>
-                      <span className="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">
+                      <span className="text-xs font-mono text-gray-700 font-medium bg-gray-100 px-2 py-0.5 rounded border border-gray-200">
                         .{rad.token}
                       </span>
                     </div>
