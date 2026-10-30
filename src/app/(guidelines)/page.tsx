@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Ampersand } from "lucide-react";
 import BrandGuidelinesHeader from "@/features/brand-guidelines/components/BrandGuidelinesHeader";
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default function BrandGuidelinesOverviewPage() {
             <div className="w-full bg-[#FFFFFF] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6 transition-all duration-300 group-hover:border-[#0A3E6D]">
               <div className="flex flex-col gap-2">
                 <h3 className="text-[24px] leading-8 font-normal tracking-[-0.005em] text-[#2A2728]">
-                  Foundation
+                  Brand Foundation
                 </h3>
                 <p className="text-[14px] leading-5 font-normal tracking-[0.01em] text-[#000000]">
                   Core design tokens, brand identity, and visual language principles.
@@ -72,8 +72,10 @@ export default function BrandGuidelinesOverviewPage() {
             </div>
             <div className="w-full bg-[#FFFFFF] border border-[#E0E0E0] rounded-[20px] p-8 sm:p-10 -mt-16 relative z-10 flex flex-col justify-between gap-6 transition-all duration-300 group-hover:border-[#0A3E6D]">
               <div className="flex flex-col gap-2">
-                <h3 className="text-[24px] leading-8 font-normal tracking-[-0.005em] text-[#2A2728]">
-                  Component
+                <h3 className="text-[24px] leading-8 font-normal tracking-[-0.005em] text-[#2A2728] flex items-center gap-1.5">
+                  <span>Design System</span>
+                  <Ampersand className="w-5 h-5 text-[#2A2728] inline-block shrink-0 stroke-[2.2]" />
+                  <span>Guidelines</span>
                 </h3>
                 <p className="text-[14px] leading-5 font-normal tracking-[0.01em] text-[#000000]">
                   Reusable UI component documented with tokens, variant, usage guidelines

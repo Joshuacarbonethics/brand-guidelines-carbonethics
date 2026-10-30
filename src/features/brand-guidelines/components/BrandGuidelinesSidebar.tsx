@@ -14,6 +14,7 @@ import {
   PanelLeftOpen,
   Menu,
   X,
+  Ampersand,
 } from "lucide-react";
 
 type CategoryId = "foundation" | "components";
@@ -40,9 +41,10 @@ const HOME_NAV_ITEM: SubNavItem = {
 const CATEGORIES: CategoryConfig[] = [
   {
     id: "foundation",
-    label: "Foundation",
+    label: "Brand Foundation",
     icon: Layers,
     items: [
+      { id: "brand-architecture", label: "Brand Architecture", href: "/brand-architecture" },
       { id: "logo", label: "Logo & Brand Assets", href: "/logo" },
       { id: "typography", label: "Typography Hierarchy", href: "/typography" },
       { id: "colors", label: "Color Palette & Swatches", href: "/colors" },
@@ -51,10 +53,11 @@ const CATEGORIES: CategoryConfig[] = [
   },
   {
     id: "components",
-    label: "Components",
+    label: "Design System & Guidelines",
     icon: LayoutGrid,
     items: [
       { id: "buttons", label: "Button Components", href: "/buttons" },
+      { id: "cards", label: "Card Components", href: "/cards" },
     ],
   },
 ];
@@ -72,6 +75,8 @@ export default function BrandGuidelinesSidebar() {
 
   const getActiveFromPath = () => {
     if (pathname.includes("/buttons")) return { section: "buttons", category: "components" as CategoryId };
+    if (pathname.includes("/cards")) return { section: "cards", category: "components" as CategoryId };
+    if (pathname.includes("/brand-architecture")) return { section: "brand-architecture", category: "foundation" as CategoryId };
     if (pathname.includes("/typography")) return { section: "typography", category: "foundation" as CategoryId };
     if (pathname.includes("/colors")) return { section: "colors", category: "foundation" as CategoryId };
     if (pathname.includes("/spacing-radius")) return { section: "spacing-radius", category: "foundation" as CategoryId };
@@ -215,13 +220,21 @@ export default function BrandGuidelinesSidebar() {
                         }`}
                       />
                       <span
-                        className={`text-[15px] ${
+                        className={`text-[15px] flex items-center gap-1 ${
                           isCatActive && activeSection !== "overview"
                             ? "font-semibold text-[#2A2728]"
                             : "font-normal text-gray-600"
                         }`}
                       >
-                        {cat.label}
+                        {cat.id === "components" ? (
+                          <>
+                            <span>Design System</span>
+                            <Ampersand className="w-3.5 h-3.5 inline-block shrink-0 stroke-[2.2]" />
+                            <span>Guidelines</span>
+                          </>
+                        ) : (
+                          cat.label
+                        )}
                       </span>
                     </div>
                     <ChevronDown
@@ -383,8 +396,16 @@ export default function BrandGuidelinesSidebar() {
                     className="flex flex-col"
                   >
                     <div className="px-2.5 pb-3 mb-2">
-                      <span className="text-[13px] font-bold text-[#2A2728] tracking-tight block">
-                        {currentCategory.label}
+                      <span className="text-[13px] font-bold text-[#2A2728] tracking-tight flex items-center gap-1">
+                        {currentCategory.id === "components" ? (
+                          <>
+                            <span>Design System</span>
+                            <Ampersand className="w-3.5 h-3.5 inline-block text-[#2A2728] shrink-0 stroke-[2.2]" />
+                            <span>Guidelines</span>
+                          </>
+                        ) : (
+                          currentCategory.label
+                        )}
                       </span>
                     </div>
 
