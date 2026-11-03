@@ -22,10 +22,10 @@ export default function BrandGuidelinesLayout({
   return (
     <SidebarProvider>
       <div className="w-full bg-[#FFFFFF] min-h-screen text-[#2A2728]">
-        <div className="max-w-[1700px] mx-auto px-6 md:px-12 xl:px-18 pt-8 sm:pt-12 lg:pt-14 pb-24">
-          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pt-0 lg:pt-10 pb-16 sm:pb-20">
+          <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-8 xl:gap-10">
             <BrandGuidelinesSidebar />
-            <main className="flex-1 w-full min-w-0 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]">
+            <main className="flex-1 w-full min-w-0 max-w-[980px] pt-2 lg:pt-0 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]">
               {children}
             </main>
           </div>

@@ -207,25 +207,29 @@ export default function FormButtonsShowcase() {
   const [playgroundDropdown, setPlaygroundDropdown] = useState("nature");
 
   return (
-    <section id="forms-buttons" className="scroll-mt-24 flex flex-col gap-12">
+    <section id="forms-buttons" className="scroll-mt-24 flex flex-col gap-6 sm:gap-8">
       {/* Section Header */}
-      <div className="flex flex-col gap-2">
-        <h2 className="type-h2-bold text-black">Button Components</h2>
-        <p className="type-body2-regular text-gray-700 max-w-3xl">
+      <div className="flex flex-col gap-1.5">
+        <h1 className="text-[26px] sm:text-[30px] lg:text-[34px] font-bold tracking-tight leading-tight text-black">
+          Button Components
+        </h1>
+        <p className="text-[14px] sm:text-[15px] leading-relaxed text-gray-700 max-w-3xl">
           Standardized action triggers engineered with 52px heights, 20px button radiuses, signature sliding hover animations, and explicit interaction states.
         </p>
       </div>
 
       {/* ================= BUTTONS SHOWCASE ================= */}
-      <div className="bg-white rounded-[8px] border border-gray-300 p-6 sm:p-8 flex flex-col gap-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-300 gap-4">
+      <div className="bg-white rounded-[12px] border border-gray-300 p-4 sm:p-6 flex flex-col gap-5 sm:gap-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-gray-200 gap-3">
           <div>
-            <h3 className="type-title-medium text-navy-900">Button Variants</h3>
+            <h2 className="text-[18px] sm:text-[20px] font-semibold text-navy-900">
+              Button Variants
+            </h2>
             <p className="type-label-regular text-gray-700 mt-0.5">
               Height: 52px • Padding: 16px 24px • Radius: 20px • Font: type.body1.medium
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             <TokenBadge label="height" value="52px" type="spacing" />
             <TokenBadge label="radius" value="20px" type="radius" />
             <TokenBadge label="font" value="18px / 500" type="typography" />
@@ -233,43 +237,43 @@ export default function FormButtonsShowcase() {
         </div>
 
         {/* 4 Button Archetypes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-5">
           {/* Variant 1: Primary Button */}
-          <div className="p-6 rounded-[8px] border border-gray-300 bg-gray-50 flex flex-col justify-start gap-2">
+          <div className="p-4 sm:p-5 rounded-[10px] border border-gray-300 bg-gray-50 flex flex-col justify-between gap-3">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="type-body2-medium text-navy-900 font-semibold">1. Primary Button</span>
-                <span className="text-xs font-mono text-gray-500">Arrow & No Arrow</span>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span className="text-[15px] text-navy-900 font-semibold">1. Primary Button</span>
+                <span className="text-xs font-mono text-gray-500 shrink-0">Arrow &amp; No Arrow</span>
               </div>
-              <p className="text-xs text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-3 leading-relaxed">
                 Primary conversion calls-to-action with horizontal sliding gradient hover animation.
               </p>
-              <div className="flex flex-wrap gap-1.5 mb-0">
+              <div className="flex flex-wrap gap-1.5">
                 <TokenBadge label="bg" value="#0A3E6D" type="color" copyable />
                 <TokenBadge label="text" value="#FDFDFD" type="color" copyable />
                 <TokenBadge label="radius" value="20px" type="radius" />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full mt-auto pt-4">
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full mt-auto pt-2">
               {/* With Arrow */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-500">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
                   ARROW
                 </span>
                 <ArrowButton
                   variant="navy"
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !pl-3.5 !pr-2.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>Explore Projects</span>
                 </ArrowButton>
               </div>
 
               {/* No Arrow */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-500">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
                   NO ARROW
                 </span>
                 <ArrowButton
@@ -277,7 +281,7 @@ export default function FormButtonsShowcase() {
                   showArrow={false}
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !px-3.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>Explore Projects</span>
                 </ArrowButton>
@@ -285,39 +289,40 @@ export default function FormButtonsShowcase() {
             </div>
           </div>
 
-          <div className="p-6 rounded-[8px] border border-gray-300 bg-navy-900 text-white flex flex-col justify-start gap-2">
+          {/* Variant 2: Secondary Button */}
+          <div className="p-4 sm:p-5 rounded-[10px] border border-gray-300 bg-navy-900 text-white flex flex-col justify-between gap-3">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="type-body2-medium text-white font-semibold">2. Secondary Button</span>
-                <span className="text-xs font-mono text-white/70">Arrow & No Arrow</span>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span className="text-[15px] text-white font-semibold">2. Secondary Button</span>
+                <span className="text-xs font-mono text-white/70 shrink-0">Arrow &amp; No Arrow</span>
               </div>
-              <p className="text-xs text-white/80 mb-4">
+              <p className="text-xs text-white/80 mb-3 leading-relaxed">
                 White outline on dark navy surface, sliding into solid white with navy text on hover.
               </p>
-              <div className="flex flex-wrap gap-1.5 mb-0">
+              <div className="flex flex-wrap gap-1.5">
                 <TokenBadge label="border" value="1.5px #FDFDFD" type="color" copyable />
                 <TokenBadge label="text" value="#FDFDFD" type="color" copyable />
                 <TokenBadge label="hover bg" value="#FDFDFD" type="color" copyable />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full mt-auto pt-4">
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-300">
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full mt-auto pt-2">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-300">
                   ARROW
                 </span>
                 <ArrowButton
                   variant="outline"
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !pl-3.5 !pr-2.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>Download Report</span>
                 </ArrowButton>
               </div>
 
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-300">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-300">
                   NO ARROW
                 </span>
                 <ArrowButton
@@ -325,7 +330,7 @@ export default function FormButtonsShowcase() {
                   showArrow={false}
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !px-3.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>Download Report</span>
                 </ArrowButton>
@@ -333,42 +338,40 @@ export default function FormButtonsShowcase() {
             </div>
           </div>
 
-          {/* Variant 3: Outline Button (White border on dark/navy background) */}
-          <div className="p-6 rounded-[8px] border border-gray-300 bg-navy-900 text-white flex flex-col justify-start gap-2">
+          {/* Variant 3: Outline Button */}
+          <div className="p-4 sm:p-5 rounded-[10px] border border-gray-300 bg-navy-900 text-white flex flex-col justify-between gap-3">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="type-body2-medium text-white font-semibold">3. Outline Button</span>
-                <span className="text-xs font-mono text-white/70">Arrow & No Arrow</span>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span className="text-[15px] text-white font-semibold">3. Outline Button</span>
+                <span className="text-xs font-mono text-white/70 shrink-0">Arrow &amp; No Arrow</span>
               </div>
-              <p className="text-xs text-white/80 mb-4">
+              <p className="text-xs text-white/80 mb-3 leading-relaxed">
                 White border with transparent fill for dark surfaces, sliding into solid white on hover.
               </p>
-              <div className="flex flex-wrap gap-1.5 mb-0">
+              <div className="flex flex-wrap gap-1.5">
                 <TokenBadge label="border" value="1.5px #FDFDFD" type="color" copyable />
                 <TokenBadge label="text" value="#FDFDFD" type="color" copyable />
                 <TokenBadge label="hover bg" value="#FDFDFD" type="color" copyable />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full mt-auto pt-4">
-              {/* With Arrow */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-300">
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full mt-auto pt-2">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-300">
                   ARROW
                 </span>
                 <ArrowButton
                   variant="outline"
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !pl-3.5 !pr-2.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>View Methodology</span>
                 </ArrowButton>
               </div>
 
-              {/* Without Arrow */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-300">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-300">
                   NO ARROW
                 </span>
                 <ArrowButton
@@ -376,7 +379,7 @@ export default function FormButtonsShowcase() {
                   showArrow={false}
                   animate
                   onClick={() => setClickCount((c) => c + 1)}
-                  className="w-full !rounded-[20px] h-[52px] !text-[15px] whitespace-nowrap"
+                  className="!w-full sm:!w-full !px-3.5 !rounded-[16px] h-[44px] !text-[13px] sm:!text-[13.5px] whitespace-nowrap"
                 >
                   <span>View Methodology</span>
                 </ArrowButton>
@@ -385,58 +388,58 @@ export default function FormButtonsShowcase() {
           </div>
 
           {/* Variant 4: Text Button */}
-          <div className="p-6 rounded-[8px] border border-gray-300 bg-gray-50 flex flex-col justify-start gap-2">
+          <div className="p-4 sm:p-5 rounded-[10px] border border-gray-300 bg-gray-50 flex flex-col justify-between gap-3">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="type-body2-medium text-navy-900 font-semibold">4. Text Button</span>
-                <span className="text-xs font-mono text-gray-500">Underline & No Underline</span>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <span className="text-[15px] text-navy-900 font-semibold">4. Text Button</span>
+                <span className="text-xs font-mono text-gray-500 shrink-0">Underline &amp; No Underline</span>
               </div>
-              <p className="text-xs text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-3 leading-relaxed">
                 Inline link buttons with signature upward-fill or smooth sliding-in underline animations.
               </p>
-              <div className="flex flex-wrap gap-1.5 mb-0">
+              <div className="flex flex-wrap gap-1.5">
                 <TokenBadge label="text" value="#0A3E6D" type="color" copyable />
                 <TokenBadge label="underline" value="Fill Up / Slide In" />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch gap-4 w-full mt-auto pt-4">
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full mt-auto pt-2">
               {/* With Underline (underline-fill-link) */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-500">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
                   UNDERLINE
                 </span>
-                <div className="h-[52px] px-4 bg-white rounded-[12px] border border-gray-200 flex items-center justify-center">
+                <div className="h-[44px] px-2.5 bg-white rounded-[12px] border border-gray-200 flex items-center justify-center">
                   <a
                     href="#forms-buttons"
                     onClick={(e) => {
                       e.preventDefault();
                       setClickCount((c) => c + 1);
                     }}
-                    className="underline-fill-link text-[15px] font-medium inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                    className="underline-fill-link text-[13px] sm:text-[13.5px] font-medium inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
                   >
                     <span>Read Full Case Study</span>
-                    <ArrowRight className="w-4 h-4 inline-block ml-0.5 shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 inline-block shrink-0" />
                   </a>
                 </div>
               </div>
 
               {/* Without Underline at rest (underline-appear-link) */}
-              <div className="flex-1 flex flex-col gap-1.5">
-                <span className="text-sm font-normal uppercase tracking-wider text-gray-500">
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
                   NO UNDERLINE
                 </span>
-                <div className="h-[52px] px-4 bg-white rounded-[12px] border border-gray-200 flex items-center justify-center">
+                <div className="h-[44px] px-2.5 bg-white rounded-[12px] border border-gray-200 flex items-center justify-center">
                   <a
                     href="#forms-buttons"
                     onClick={(e) => {
                       e.preventDefault();
                       setClickCount((c) => c + 1);
                     }}
-                    className="underline-appear-link text-[#0A3E6D] text-[15px] font-medium inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                    className="underline-appear-link text-[#0A3E6D] text-[13px] sm:text-[13.5px] font-medium inline-flex items-center gap-1 cursor-pointer whitespace-nowrap"
                   >
                     <span>Read Full Case Study</span>
-                    <ArrowRight className="w-4 h-4 inline-block ml-0.5 shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 inline-block shrink-0" />
                   </a>
                 </div>
               </div>
@@ -450,7 +453,7 @@ export default function FormButtonsShowcase() {
       <div className="bg-white rounded-[8px] border border-gray-300 p-6 sm:p-8 flex flex-col gap-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-300 gap-4">
           <div>
-            <h3 className="type-title-medium text-navy-900">Text Field & Dropdown (5 States)</h3>
+            <h3 className="type-title-medium text-navy-900">Text Field &amp; Dropdown (5 States)</h3>
             <p className="type-label-regular text-gray-700 mt-0.5">
               Radius: 8px • Padding: 16px horiz, 8px vert • Label: type.label.regular • Input: type.body3.medium
             </p>
@@ -471,7 +474,6 @@ export default function FormButtonsShowcase() {
               <TokenBadge label="border" value="#E0E0E0" type="color" />
             </div>
 
-            {/* Input */}
             <div className="flex flex-col gap-1.5">
               <label className="type-label-regular text-[#403B3C]">
                 Corporate Email Address
@@ -484,7 +486,6 @@ export default function FormButtonsShowcase() {
               />
             </div>
 
-            {/* Custom Select Dropdown */}
             <CustomDropdownField
               label="Organization Type"
               options={ORG_OPTIONS}
@@ -502,7 +503,6 @@ export default function FormButtonsShowcase() {
               <TokenBadge label="border" value="#0A3E6D" type="color" />
             </div>
 
-            {/* Input */}
             <div className="flex flex-col gap-1.5">
               <label className="type-label-regular text-[#0A3E6D] font-medium">
                 Corporate Email Address
@@ -514,7 +514,6 @@ export default function FormButtonsShowcase() {
               />
             </div>
 
-            {/* Custom Select Dropdown */}
             <CustomDropdownField
               label="Organization Type"
               options={ORG_OPTIONS}
@@ -532,7 +531,6 @@ export default function FormButtonsShowcase() {
               <TokenBadge label="bg" value="#E0E0E0" type="color" />
             </div>
 
-            {/* Input */}
             <div className="flex flex-col gap-1.5">
               <label className="type-label-regular text-[#403B3C]">
                 Corporate Email Address
@@ -544,7 +542,6 @@ export default function FormButtonsShowcase() {
               />
             </div>
 
-            {/* Custom Select Dropdown */}
             <CustomDropdownField
               label="Organization Type"
               options={DISABLED_OPTIONS}
@@ -563,7 +560,6 @@ export default function FormButtonsShowcase() {
               <TokenBadge label="border/text" value="#5EB7A9" type="color" />
             </div>
 
-            {/* Input */}
             <div className="flex flex-col gap-1.5">
               <label className="type-label-regular text-[#5EB7A9] font-medium flex items-center justify-between">
                 <span>Corporate Email Address</span>
@@ -579,7 +575,6 @@ export default function FormButtonsShowcase() {
               />
             </div>
 
-            {/* Custom Select Dropdown */}
             <CustomDropdownField
               label="Verified Project Category"
               options={PROJECT_OPTIONS}
@@ -598,7 +593,6 @@ export default function FormButtonsShowcase() {
               <TokenBadge label="border/text" value="#BC787A" type="color" />
             </div>
 
-            {/* Input */}
             <div className="flex flex-col gap-1.5">
               <label className="type-label-regular text-[#BC787A] font-medium flex items-center justify-between">
                 <span>Corporate Email Address</span>
@@ -614,7 +608,6 @@ export default function FormButtonsShowcase() {
               />
             </div>
 
-            {/* Custom Select Dropdown */}
             <CustomDropdownField
               label="Country Selection Required"
               options={COUNTRY_OPTIONS}

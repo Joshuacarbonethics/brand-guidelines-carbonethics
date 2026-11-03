@@ -17,17 +17,17 @@ export default function BrandGuidelinesMain() {
   return (
     <div className="w-full bg-white min-h-screen text-[#2A2728]">
       {/* Container wrapper matching other pages */}
-      <div className="max-w-[1700px] mx-auto px-6 md:px-12 xl:px-18 pt-8 sm:pt-12 lg:pt-14 pb-24">
+      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pt-0 lg:pt-10 pb-16 sm:pb-20">
         {/* Top Header Hero */}
         <BrandGuidelinesHeader />
 
         {/* 2-Column Layout: Sticky Sidebar (Left) + Content (Right) */}
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
+        <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-8 xl:gap-10">
           {/* Sticky Left Sidebar Navigation */}
           <BrandGuidelinesSidebar />
 
           {/* Main Content Sections (Right) */}
-          <main className="flex-1 w-full min-w-0 flex flex-col gap-20">
+          <main className="flex-1 w-full min-w-0 max-w-[980px] flex flex-col gap-14 sm:gap-16">
             {/* 1. Brand Logo & Assets */}
             <LogoShowcase />
 

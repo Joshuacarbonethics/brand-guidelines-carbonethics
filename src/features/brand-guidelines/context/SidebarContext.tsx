@@ -10,7 +10,7 @@ interface SidebarContextType {
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isSubPanelOpen, setIsSubPanelOpen] = useState(false);
+  const [isSubPanelOpen, setIsSubPanelOpen] = useState(true);
 
   return (
     <SidebarContext.Provider value={{ isSubPanelOpen, setIsSubPanelOpen }}>
@@ -23,7 +23,7 @@ export function useSidebar() {
   const context = useContext(SidebarContext);
   return (
     context || {
-      isSubPanelOpen: false,
+      isSubPanelOpen: true,
       setIsSubPanelOpen: () => {},
     }
   );
