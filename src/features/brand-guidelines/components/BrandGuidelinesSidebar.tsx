@@ -54,6 +54,7 @@ const CATEGORIES: CategoryConfig[] = [
     items: [
       { id: "buttons", label: "Button Components", href: "/buttons" },
       { id: "cards", label: "Card Components", href: "/cards" },
+      { id: "modals", label: "Modal Components", href: "/modals" },
     ],
   },
 ];
@@ -72,6 +73,7 @@ export default function BrandGuidelinesSidebar() {
   const getActiveFromPath = (targetPath: string) => {
     if (targetPath.includes("/buttons")) return { section: "buttons", category: "components" as CategoryId };
     if (targetPath.includes("/cards")) return { section: "cards", category: "components" as CategoryId };
+    if (targetPath.includes("/modals")) return { section: "modals", category: "components" as CategoryId };
     if (targetPath.includes("/brand-architecture")) return { section: "brand-architecture", category: "foundation" as CategoryId };
     if (targetPath.includes("/typography")) return { section: "typography", category: "foundation" as CategoryId };
     if (targetPath.includes("/colors")) return { section: "colors", category: "foundation" as CategoryId };
